@@ -50,6 +50,7 @@ Currently there a two available preprocessors which you can chain in any order (
 Available processors:
 * sass
 * postcss
+* less
 
 To add on simply pass in an object to the ``processors``-Array containing a ``type``-Property with the processor title.
 
