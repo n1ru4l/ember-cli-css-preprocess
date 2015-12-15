@@ -12,7 +12,7 @@
       "css",
       "sass",
       "scss",
-      "preprocessor"
+      "preprocessor",
       "preprocess",
       "postprocessor",
       "postprocess",
@@ -28,7 +28,7 @@
   "bugs": {
       "url": "https://github.com/n1ru4l/ember-cli-css-preprocess/issues",
       "email": "laurinquast@googlemail.com"
-  }
+  },
   "license": "MIT",
   "dependencies": {
     "broccoli-caching-writer": "^2.2.1",
