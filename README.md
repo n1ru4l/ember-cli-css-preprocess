@@ -1,4 +1,4 @@
-# ember-cli-css-process
+# ember-cli-css-preprocess
 
 Preprocess your stylesheets with multiple preprocessors.
 
