@@ -1,0 +1,50 @@
+{
+  "name": "ember-cli-css-preprocess",
+  "version": "0.0.1",
+  "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
+  "main": "index.js",
+  "scripts": {
+      "test": "echo 'No tests bro :('"
+  },
+  "keywords": [
+      "ember-addon",
+      "ember-cli",
+      "css",
+      "sass",
+      "scss",
+      "preprocessor"
+      "preprocess",
+      "postprocessor",
+      "postprocess",
+      "postcss",
+      "node-sass",
+      "less"
+  ],
+  "author": "Laurin Quast <laurinquast@googlemail.com> (https://github.com/n1ru4l/)",
+  "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/n1ru4l/ember-cli-css-preprocess.git"
+  },
+  "bugs": {
+      "url": "https://github.com/n1ru4l/ember-cli-css-preprocess/issues",
+      "email": "laurinquast@googlemail.com"
+  }
+  "license": "MIT",
+  "dependencies": {
+    "broccoli-caching-writer": "^2.2.1",
+    "broccoli-merge-trees": "^1.1.0",
+    "deepmerge": "^0.2.10",
+    "ember-cli-version-checker": "^1.1.4",
+    "include-path-searcher": "^0.1.0",
+    "less": "^2.5.3",
+    "lodash.merge": "^3.3.2",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^3.4.2",
+    "postcss": "^5.0.12"
+  },
+  "devDependencies": {
+  },
+  "engines" : {
+      "node" : ">=5.2.0"
+  }
+}
