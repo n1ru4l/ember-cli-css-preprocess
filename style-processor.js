@@ -61,7 +61,7 @@ StyleProcessor.prototype.build = function() {
                     encoding: 'utf8'
             });
 
-            //Resolve to tell brococli we finished our async stuff
+            //Resolve to tell broccoli we finished our async stuff
             return Promise.resolve();
     })
 
@@ -93,8 +93,7 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
         var optionsConfig = processor.options || {};
 
         var options = deepMerge(optionsConfig, optionsDefault);
-
-        //todo
+        
         var compiledCSS = nodeSass.renderSync(optionsDefault).css;
 
         return res(compiledCSS);

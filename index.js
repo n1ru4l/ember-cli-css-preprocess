@@ -24,7 +24,7 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 
         return new StyleProcessor([tree], input, output, options);
     });
-    
+
     return mergeTrees(trees);
 };
 
@@ -43,14 +43,14 @@ module.exports = {
     },
     setupPreprocessorRegistry: function(type, registry) {
 		registry.add('css', new StyleProcessorPlugin(this.styleProcessorOptions.bind(this)));
-	},
+    },
     included: function included(app) {
         this.app = app;
 
         this._super.included.apply(this, arguments);
 
         if (this.shouldSetupRegistryInIncluded()) {
-			this.setupPreprocessorRegistry('parent', app.registry);
-		}
+            this.setupPreprocessorRegistry('parent', app.registry);
+        }
     }
 };
