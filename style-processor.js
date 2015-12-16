@@ -49,25 +49,38 @@ StyleProcessor.prototype.build = function() {
     return this.options.processors.reduce(function(currentPromise, nextProcessor) {
 
         //Chain em all
-        return currentPromise.then(function(dataProcessed) {
+        return currentPromise
+
+        .then(function(dataProcessed) {
             return self.getProcessorPromise(dataProcessed, nextProcessor);
+        })
+
+        //Catch Error from preprocessor and pass it one level higher!
+        .catch(function(errBroccoli) {
+            return Promise.reject(errBroccoli);
         });
+
     }, Promise.resolve(dataRaw))
     // Stylesheet preprocessing complete -> Write to file
     .then(function(dataProcessed) {
+        mkdirp.sync(path.dirname(destFile));
 
-            mkdirp.sync(path.dirname(destFile));
-            fs.writeFileSync(destFile, dataProcessed, {
-                    encoding: 'utf8'
-            });
+        fs.writeFileSync(destFile, dataProcessed, {
+            encoding: 'utf8'
+        });
 
-            //Resolve to tell broccoli we finished our async stuff
-            return Promise.resolve();
+        //Resolve to tell broccoli we finished our async stuff
+        return Promise.resolve();
     })
+    // Stylesheet preprocessing failed -> Throw an error
+    .catch(function(errBroccoli) {
+        //Add missing data to error
+        errBroccoli.file = this.inputFile;
+        errBroccoli.treeDir = this.inputPaths[0];
 
-    .catch(function(err) {
-        console.log(err);
-    });
+        //Reject and tell broccoli we got some error
+        return Promise.reject(errBroccoli);
+    }.bind(this));
 }
 
 StyleProcessor.prototype.getProcessorPromise = function(dataToProcess, processor) {
@@ -94,9 +107,19 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
 
         var options = deepMerge(optionsConfig, optionsDefault);
 
-        var compiledCSS = nodeSass.renderSync(optionsDefault).css;
+        nodeSass.render(options, function(errSass, result) {
 
-        return res(compiledCSS);
+            if(errSass) {
+                //Transform sass error to broccoli error
+                var errBroccoli     = new Error(errSass.message);
+                errBroccoli.line    = errSass.line;
+                errBroccoli.column  = errSass.column;
+
+                return rej(errBroccoli)
+            }
+
+            return res(result.css);
+        });
     }.bind(this))
 }
 
@@ -122,11 +145,18 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
     return new Promise(function(res, rej) {
         postcss(postcssPlugins)
         .process(data)
+
         .then(function(dataProcessed) {
             return res(dataProcessed.css);
-        }).catch(function(err) {
-            console.log(err.toString());
-            return res("");
+        })
+
+        .catch(function(errPostCss) {
+            //Transform postcss error to broccoli error
+            var errBroccoli     = new Error(errPostCss.originalMessage);
+            errBroccoli.line    = errPostCss.lineNumber;
+            errBroccoli.column  = errPostCss.columnNumber;
+
+            return rej(errBroccoli);
         });
     });
 }
@@ -134,7 +164,7 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
 StyleProcessor.prototype.compileLess = function(data, processor) {
 
     var optionsConfig   = processor.options || {},
-        optionsDefault   = { plugins: [], paths: [this.importPath] },
+        optionsDefault  = { plugins: [], paths: [this.importPath] },
         options         = null;
 
     //Load plugins
@@ -151,12 +181,21 @@ StyleProcessor.prototype.compileLess = function(data, processor) {
     options = deepMerge(options, optionsDefault);
 
     return new Promise(function(res, rej) {
-        less.render(data, options, function(e, output) {
-            if(e) {
-                return rej(e);
+        less.render(data, options, function(errLess, result) {
+            if(errLess) {
+
+                //Concat error message
+                var errMessage      = errLess.message + "\n" + errLess.extract[0];
+
+                //Transform postcss error to broccoli error
+                var errBroccoli     = new Error(errMessage);
+                errBroccoli.line    = errLess.line;
+                errBroccoli.column  = errLess.column;
+
+                return rej(errBroccoli);
             }
 
-            return res(output.css);
+            return res(result.css);
         })
     }.bind(this));
 }
