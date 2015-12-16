@@ -15,7 +15,7 @@ You can determine in which order the stylesheets are processed!
 ## Installation
 
 ```shell
-ember install ember-cli-css-process
+ember install ember-cli-css-preprocess
 ```
 
 ## Usage
