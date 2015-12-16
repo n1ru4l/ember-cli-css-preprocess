@@ -93,7 +93,7 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
         var optionsConfig = processor.options || {};
 
         var options = deepMerge(optionsConfig, optionsDefault);
-        
+
         var compiledCSS = nodeSass.renderSync(optionsDefault).css;
 
         return res(compiledCSS);
@@ -124,6 +124,9 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
         .process(data)
         .then(function(dataProcessed) {
             return res(dataProcessed.css);
+        }).catch(function(err) {
+            console.log(err.toString());
+            return res("");
         });
     });
 }
