@@ -100,7 +100,7 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
 
         var optionsDefault = {
             data: data,
-            includePaths: [this.importPath]
+            includePaths: ['.' + this.importPath]
         };
 
         var optionsConfig = processor.options || {};
