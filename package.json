@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-css-preprocess",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
@@ -32,15 +32,15 @@
   "license": "MIT",
   "dependencies": {
     "broccoli-caching-writer": "^2.2.1",
-    "broccoli-merge-trees": "^1.1.0",
+    "broccoli-merge-trees": "^1.1.1",
     "deepmerge": "^0.2.10",
-    "ember-cli-version-checker": "^1.1.4",
+    "ember-cli-version-checker": "^1.1.6",
     "include-path-searcher": "^0.1.0",
     "less": "^2.5.3",
     "lodash.merge": "^3.3.2",
     "mkdirp": "^0.5.1",
     "node-sass": "^3.4.2",
-    "postcss": "^5.0.12"
+    "postcss": "^5.0.14"
   },
   "devDependencies": {
   },

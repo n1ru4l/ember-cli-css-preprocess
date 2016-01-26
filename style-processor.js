@@ -44,7 +44,6 @@ StyleProcessor.prototype.build = function() {
     var filename    = includePathSearcher.findFileSync(this.inputFile, this.inputPaths);
     var dataRaw     = fs.readFileSync(filename, 'utf8');
 
-
     //Execute processors in sequential order
     return this.options.processors.reduce(function(currentPromise, nextProcessor) {
 
@@ -52,7 +51,7 @@ StyleProcessor.prototype.build = function() {
         return currentPromise
 
         .then(function(dataProcessed) {
-            return self.getProcessorPromise(dataProcessed, nextProcessor);
+            return self.getProcessorPromise(dataProcessed, nextProcessor, filename);
         })
 
         //Catch Error from preprocessor and pass it one level higher!
@@ -83,7 +82,31 @@ StyleProcessor.prototype.build = function() {
     }.bind(this));
 }
 
-StyleProcessor.prototype.getProcessorPromise = function(dataToProcess, processor) {
+StyleProcessor.prototype.getProcessorPromise = function(dataToProcess, processor, currFilename) {
+
+	//chech if the current processor is should process the current data
+	var boolProcess = false;
+	//TODO: why are the filenames fucked up?
+	var needle = '/styles/';
+	var needleIndex = currFilename.indexOf(needle);
+	currFilename = currFilename.substr(needleIndex + needle.length);
+
+	if(typeof processor.file === 'undefined') {
+		boolProcess = true;
+	} else if (processor.file === currFilename) {
+		boolProcess = true;
+	} else if (typeof processor.file === 'array') {
+		if(processor.file.indexOf(currFilename) != -1) {
+			boolProcess = true;
+		}
+	}
+
+	if(!boolProcess) {
+		return new Promise(function(res, rej) {
+			return res(dataToProcess);
+		});
+	}
+
     if(processor.type === 'sass') {
         return this.compileSass(dataToProcess, processor);
     } else if (processor.type === 'postcss') {
@@ -129,6 +152,16 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
         throw new Error('Please add plugins to your postcss-process!');
     }
 
+	var processOptions = {};
+
+    if(processor.parser) {
+		processOptions.parser = processor.parser;
+    }
+
+	if(processor.syntax) {
+		processOptions.syntax = processor.syntax;
+    }
+
     //Wrap options in module
     var postcssPlugins = processor.plugins.reduce(function(pluginArray, curPluginConf) {
 
@@ -144,7 +177,7 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
 
     return new Promise(function(res, rej) {
         postcss(postcssPlugins)
-        .process(data)
+        .process(data, processOptions)
 
         .then(function(dataProcessed) {
             return res(dataProcessed.css);
