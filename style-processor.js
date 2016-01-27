@@ -191,8 +191,8 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor, filename) {
             //Transform postcss error to broccoli error
 			//TODO: Do postcss plugins all have different errorMessage properties?
 			var errBroccoli= new Error(errPostCss.message ? errPostCss.message : errPostCss.originalMessage);
-	        errBroccoli.line    = errPostCss.lineNumber;
-	        errBroccoli.column  = errPostCss.columnNumber;
+			errBroccoli.line    = errPostCss.lineNumber;
+			errBroccoli.column  = errPostCss.columnNumber;
 
             return rej(errBroccoli);
         });
