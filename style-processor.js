@@ -110,7 +110,7 @@ StyleProcessor.prototype.getProcessorPromise = function(dataToProcess, processor
     if(processor.type === 'sass') {
         return this.compileSass(dataToProcess, processor);
     } else if (processor.type === 'postcss') {
-        return this.compilePostCSS(dataToProcess, processor);
+        return this.compilePostCSS(dataToProcess, processor, filename);
     } else if(processor.type === 'less') {
         return this.compileLess(dataToProcess, processor);
     } else {
@@ -146,13 +146,17 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
     }.bind(this))
 }
 
-StyleProcessor.prototype.compilePostCSS = function(data, processor) {
+StyleProcessor.prototype.compilePostCSS = function(data, processor, filename) {
 
     if(!processor.plugins) {
         throw new Error('Please add plugins to your postcss-process!');
     }
 
-	var processOptions = {};
+	var processOptions = {
+		//We need this for some plugins (e.q. precss to find imports)
+		from: 'app/styles/' + filename,
+		to: 'styles/' //TODO: What do with this?
+	};
 
     if(processor.parser) {
 		processOptions.parser = processor.parser;
@@ -185,9 +189,10 @@ StyleProcessor.prototype.compilePostCSS = function(data, processor) {
 
         .catch(function(errPostCss) {
             //Transform postcss error to broccoli error
-            var errBroccoli     = new Error(errPostCss.originalMessage);
-            errBroccoli.line    = errPostCss.lineNumber;
-            errBroccoli.column  = errPostCss.columnNumber;
+			//TODO: Do postcss plugins all have different errorMessage properties?
+			var errBroccoli= new Error(errPostCss.message ? errPostCss.message : errPostCss.originalMessage);
+	        errBroccoli.line    = errPostCss.lineNumber;
+	        errBroccoli.column  = errPostCss.columnNumber;
 
             return rej(errBroccoli);
         });
