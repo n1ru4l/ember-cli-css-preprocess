@@ -110,7 +110,7 @@ StyleProcessor.prototype.getProcessorPromise = function(dataToProcess, processor
     if(processor.type === 'sass') {
         return this.compileSass(dataToProcess, processor);
     } else if (processor.type === 'postcss') {
-        return this.compilePostCSS(dataToProcess, processor, filename);
+        return this.compilePostCSS(dataToProcess, processor, currFilename);
     } else if(processor.type === 'less') {
         return this.compileLess(dataToProcess, processor);
     } else {

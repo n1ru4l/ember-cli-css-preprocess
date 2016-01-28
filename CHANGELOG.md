@@ -1,3 +1,7 @@
+## 0.0.8
+* Fixes filepath which is passed to postcss
+
+
 ## 0.0.7
 * Fixes postcss input file path
 * Fixes postcss error reporting
