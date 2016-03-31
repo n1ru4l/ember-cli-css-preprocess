@@ -143,6 +143,8 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
         // Add options here
         styleProcessorOptions: {
             processors: [{
+                type: 'sass'
+            }, {
                 type: 'postcss',
                 plugins: [{
                     module: require('autoprefixer'),
@@ -152,8 +154,6 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
                         ]
                     }
                 ]
-            }, {
-                type: 'sass'
             }
             ],
             extension: 'css'
