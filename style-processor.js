@@ -31,7 +31,7 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
     this.outputFile     = outputFile;
 
     //Import path for preprocessors that allow including other files
-    this.importPath = path.dirname(inputFile);
+    this.importPath = '.' + path.dirname(inputFile);
 }
 
 StyleProcessor.prototype.build = function() {
@@ -123,7 +123,7 @@ StyleProcessor.prototype.compileSass = function(data, processor) {
 
         var optionsDefault = {
             data: data,
-            includePaths: ['.' + this.importPath]
+            includePaths: [this.importPath]
         };
 
         var optionsConfig = processor.options || {};
