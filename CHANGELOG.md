@@ -1,4 +1,10 @@
-## 0.0.8
+# 1.0.0
+* Refactors StyleProcessor
+* Processor modules are no longer dependencies and must be installed manually
+* Removes many semicolons ;)
+
+
+# 0.0.8
 * Fixes filepath which is passed to postcss
 
 

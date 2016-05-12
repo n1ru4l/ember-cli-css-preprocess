@@ -43,12 +43,14 @@ And add the the basic options:
 ### Adding a preprocessor
 Currently there a two available preprocessors which you can chain in any order (even multiple times if you want).
 
-Available processors:
-- sass
+Supported processors:
+- node-sass
 - postcss
 - less
 
 To add on simply pass in an object to the `processors`-Array containing a `type`-Property with the processor title.
+Furthermore you have to install the corresponding npm-module with the same name (e.g. `npm install autoprefixer --save-dev`).
+
 
 #### Adding a Sass Preprocessor:
 
@@ -57,7 +59,7 @@ To add on simply pass in an object to the `processors`-Array containing a `type`
         // Add options here
         styleProcessorOptions: {
             processors: [{
-                type: 'sass'
+                type: 'node-sass'
             }],
             extension: 'scss'
         }
@@ -143,7 +145,7 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
         // Add options here
         styleProcessorOptions: {
             processors: [{
-                type: 'sass'
+                type: 'node-sass'
             }, {
                 type: 'postcss',
                 plugins: [{
@@ -171,7 +173,7 @@ This example should clarify how to chain preprocessors. The position inside the 
         styleProcessorOptions: {
             processors: [{
                 type: 'postcss',
-                file: ['test.css'],
+                file: ['test'],
                 plugins: [{
                     module: require('autoprefixer'),
                     options: {
@@ -181,7 +183,7 @@ This example should clarify how to chain preprocessors. The position inside the 
                     }
                 ]
             }, {
-                type: 'sass'
+                type: 'node-sass'
             }
             ],
             extension: 'css'
