@@ -42,6 +42,7 @@ const _loadModule = function(moduleName) {
 	const compatibleVersion = compatibleProcessors[moduleName]
 
 	if (!semver.satisfies(moduleVersion, compatibleVersion)) {
+		
 		throw new Error(`Processor ${moduleName} (${moduleVersion}) is not compatible. Required version: ${compatibleVersion}`)
 	}
 

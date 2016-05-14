@@ -4,7 +4,8 @@
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'No tests bro :('"
+    "test": "./node_modules/.bin/gulp test",
+    "prepublish": ""
   },
   "keywords": [
     "ember-addon",
@@ -44,7 +45,8 @@
     "semver": "^5.1.0"
   },
   "devDependencies": {
-    "eslint": "^2.10.0"
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
   },
   "compatibleProcessors": {
     "postcss": "^5.0.14",
