@@ -1,4 +1,4 @@
-# ember-cli-css-preprocess
+# ember-cli-css-preprocess ![Build status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")
 Preprocess your stylesheets with multiple preprocessors.
 
 Currently supported preprocessors:
