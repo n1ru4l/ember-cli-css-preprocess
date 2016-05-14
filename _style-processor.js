@@ -54,7 +54,7 @@ StyleProcessor.prototype.build = co.wrap(function * () {
 	for(let i = 0; i < this._processors.length; i++) {
 		const processor = this._processors[i]
 
-		if(this._checkProcess(processor)) {
+		if(this._checkProcess(processor.filter)) {
 			const _processor = loadProcessor(processor.type)
 			fileContents = yield _processor(fileContents, processor, this._fileInfo)
 		}
@@ -72,24 +72,25 @@ StyleProcessor.prototype.build = co.wrap(function * () {
 })
 
 /**
- * Check if a file should be processed by an processor
+ * Check if a file matches a filter
  *
+ * @param {array|string} filter Array of String or String. Supports glob pattern.
  * @returns {boolean} _process
  */
-StyleProcessor.prototype._checkProcess = function(processor) {
+StyleProcessor.prototype._checkProcess = function(filter) {
 	let _process = false
 	const fileName = this._inputFileName
 
-	if(processor.filter === undefined) {
+	if(filter === undefined) {
 		_process = true
-	} else if(processor.filter instanceof String) {
-		if(isGlob(processor.filter)) {
-			_process = minimatch(fileName, processor.filter)
-		} else if(fileName === processor.filter) {
+	} else if(filter instanceof String) {
+		if(isGlob(filter)) {
+			_process = minimatch(fileName, filter)
+		} else if(fileName === filter) {
 			_process = true
 		}
-	} else if(processor.filter instanceof Array) {
-		processor.filter.forEach((filter) => {
+	} else if(filter instanceof Array) {
+		filter.forEach((filter) => {
 			if(isGlob(filter)) {
 				_process = minimatch(fileName, filter)
 			} else if(fileName === filter) {
