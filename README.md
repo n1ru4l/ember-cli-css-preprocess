@@ -165,7 +165,7 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
 
 This example should clarify how to chain preprocessors. The position inside the `processors`-array determines the order in which the stylesheets are processed by each preprocessors (from top to bottom).
 
-#### Setup processor to parse specific files only:
+#### Setup processor to parse specific files only (Filter):
 
 ```javascript
     var app = new EmberApp(defaults, {
@@ -173,7 +173,7 @@ This example should clarify how to chain preprocessors. The position inside the 
         styleProcessorOptions: {
             processors: [{
                 type: 'postcss',
-                file: ['test'],
+                filter: ['test.css'],
                 plugins: [{
                     module: require('autoprefixer'),
                     options: {
@@ -191,4 +191,5 @@ This example should clarify how to chain preprocessors. The position inside the 
     ...
 ```
 
-With this setup the postcss processor will only process the file `test.css`. The `file` property can either be a string or an array of strings.
+With this setup the postcss processor will only process the file `test.css`. The `filter` property can either be a string or an array of strings.
+The filter supports the glob pattern.

@@ -36,6 +36,7 @@ module.exports = {
 		// var env = process.env.EMBER_ENV
 		var options = (this.app && this.app.options.styleProcessorOptions) || {}
 		options.outputFile = options.outputFile || this.project.name() + '.css'
+		options.projectRoot = this.app.project.root
 		return options
 	},
 	setupPreprocessorRegistry: function(type, registry) {
