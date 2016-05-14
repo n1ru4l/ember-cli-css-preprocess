@@ -1,5 +1,4 @@
 'use strict'
-const deepMerge = require('deepmerge')
 
 /**
  * A module for transforming file contents with postcss
@@ -10,8 +9,8 @@ const deepMerge = require('deepmerge')
 module.exports = function(postcss) {
 	return function(content, processor, fileInfo) {
 		if(!processor.plugins) {
-	        throw new Error('Please add plugins to your postcss-process!')
-	    }
+			throw new Error('Please add plugins to your postcss-process!')
+		}
 
 		var processOptions = {
 			//We need this for some plugins (e.q. precss to find imports)
@@ -19,44 +18,43 @@ module.exports = function(postcss) {
 			to: 'styles/' //TODO: What do with this?
 		}
 
-	    if(processor.parser) {
-			processOptions.parser = processor.parser;
-	    }
+		if(processor.parser) {
+			processOptions.parser = processor.parser
+		}
 
 		if(processor.syntax) {
-			processOptions.syntax = processor.syntax;
-	    }
+			processOptions.syntax = processor.syntax
+		}
 
-	    //Wrap options in module
-	    var postcssPlugins = processor.plugins.reduce(function(pluginArray, curPluginConf) {
+		//Wrap options in module
+		var postcssPlugins = processor.plugins.reduce(function(pluginArray, curPluginConf) {
 
-	        if(typeof curPluginConf.module != 'function') {
-	            throw new Error('One of your postcss plugins is not a module!')
-	        }
+			if(typeof curPluginConf.module != 'function') {
+				throw new Error('One of your postcss plugins is not a module!')
+			}
 
-	        var pluginOptions = curPluginConf.options || {}
-	        pluginArray.push(curPluginConf.module(pluginOptions))
+			var pluginOptions = curPluginConf.options || {}
+			pluginArray.push(curPluginConf.module(pluginOptions))
 
-	        return pluginArray
-	    }, [])
+			return pluginArray
+		}, [])
 
-	    return new Promise(function(res, rej) {
-	        postcss(postcssPlugins)
-	        .process(content, processOptions)
+		return new Promise(function(res, rej) {
+			postcss(postcssPlugins)
+			.process(content, processOptions)
 
-	        .then(function(dataProcessed) {
-	            return res(dataProcessed.css)
-	        })
+			.then(function(dataProcessed) {
+				return res(dataProcessed.css)
+			})
 
-	        .catch(function(errPostCss) {
-	            //Transform postcss error to broccoli error
+			.catch(function(errPostCss) {
+				//Transform postcss error to broccoli error
 				//TODO: Do postcss plugins all have different errorMessage properties?
-				var errBroccoli= new Error(errPostCss.message ? errPostCss.message : errPostCss.originalMessage);
+				var errBroccoli= new Error(errPostCss.message ? errPostCss.message : errPostCss.originalMessage)
 				errBroccoli.line    = errPostCss.lineNumber
 				errBroccoli.column  = errPostCss.columnNumber
-
-	            return rej(errBroccoli)
-	        })
-	    })
+				return rej(errBroccoli)
+			})
+		})
 	}
 }

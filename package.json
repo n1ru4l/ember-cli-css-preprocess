@@ -38,14 +38,14 @@
     "ember-cli-version-checker": "^1.1.6",
     "find-package-json": "^1.0.0",
     "fs-promise": "^0.5.0",
-    "include-path-searcher": "^0.1.0",
     "lodash.merge": "^3.3.2",
-    "merge": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^2.0.0",
     "semver": "^5.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^2.10.0"
+  },
   "compatibleProcessors": {
     "postcss": "^5.0.14",
     "node-sass": "^3.4.2",

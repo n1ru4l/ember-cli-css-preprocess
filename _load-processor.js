@@ -1,10 +1,8 @@
 'use strict'
 
-const fs 					= require('fs')
-const co 					= require('co')
-const compatibleProcessors 	= require('./package').compatibleProcessors;
-const semver 				= require('semver')
-const finder 				= require('find-package-json')
+const compatibleProcessors = require('./package').compatibleProcessors
+const semver = require('semver')
+const finder = require('find-package-json')
 
 /**
  * A module for loading a style processor
@@ -25,29 +23,29 @@ const _processors = {}
  * @returns {Promise} processor
  */
 const _loadModule = function(moduleName) {
-    let modulePath;
+	let modulePath
 	// Check if module exists
-    try {
-        modulePath = require.resolve(moduleName)
-    } catch (err) {
-        switch (err.code) {
-            case 'MODULE_NOT_FOUND':
-                throw new Error(`Processor ${moduleName} not found. Please install it first (npm install ${moduleName} --save)`)
-            default:
-                throw err
-        }
-    }
+	try {
+		modulePath = require.resolve(moduleName)
+	} catch (err) {
+		switch (err.code) {
+		case 'MODULE_NOT_FOUND':
+			throw new Error(`Processor ${moduleName} not found. Please install it first (npm install ${moduleName} --save)`)
+		default:
+			throw err
+		}
+	}
 
     //Check if module version is supported
-    const f = finder(modulePath)
-    const moduleVersion = f.next().value.version
+	const f = finder(modulePath)
+	const moduleVersion = f.next().value.version
 	const compatibleVersion = compatibleProcessors[moduleName]
 
-    if (!semver.satisfies(moduleVersion, compatibleVersion)) {
-        throw new Error(`Processor ${moduleName} (${moduleVersion}) is not compatible. Required version: ${compatibleVersion}`)
-    }
+	if (!semver.satisfies(moduleVersion, compatibleVersion)) {
+		throw new Error(`Processor ${moduleName} (${moduleVersion}) is not compatible. Required version: ${compatibleVersion}`)
+	}
 
-    return require(moduleName)
+	return require(moduleName)
 }
 
 /**
@@ -61,9 +59,9 @@ const _loadProcessor = function (processorName) {
 	const compatibleVersion = compatibleProcessors[processorName]
 
     // Check if module is compatible
-    if (compatibleVersion === undefined) {
-        throw new Error(`Processor ${processorName} is not supported yet.`)
-    }
+	if (compatibleVersion === undefined) {
+		throw new Error(`Processor ${processorName} is not supported yet.`)
+	}
 
 	const _module = _loadModule(processorName)
 	const processor = require(`./processors/${processorName}`)

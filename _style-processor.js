@@ -1,32 +1,30 @@
 'use strict'
 
-const CachingWriter 		= require('broccoli-caching-writer')
-const merge 				= require('lodash.merge') // can we replace merge width deepMerge completely?
-const mkdirp 				= require('mkdirp-promise')
-const path 					= require('path')
-const fs 					= require('fs-promise')
-const includePathSearcher 	= require('include-path-searcher')
-const co 					= require('co')
+const CachingWriter = require('broccoli-caching-writer')
+const mkdirp = require('mkdirp-promise')
+const path = require('path')
+const fs = require('fs-promise')
+const co = require('co')
 
-const loadProcessor 		= require('./_load-processor')
+const loadProcessor = require('./_load-processor')
 
 StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
 
 function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
 
-    if (!(this instanceof StyleProcessor)) {
-        return new StyleProcessor(sourceTrees, inputFile, outputFile, _options)
-    }
+	if (!(this instanceof StyleProcessor)) {
+		return new StyleProcessor(inputNodes, inputFile, outputFile, _options)
+	}
 
-    CachingWriter.call(this, inputNodes, {
-        annotation: _options.annotation
-    });
+	CachingWriter.call(this, inputNodes, {
+		annotation: _options.annotation
+	})
 
 	this._processors 	 = _options.processors
 	this._inputFilePath  = `.${inputFile}`
 	this._inputFileName  = path.basename(this._inputFilePath, `.${_options.ext}`) // base filename without extension
-    this._outputFile     = outputFile
+	this._outputFile     = outputFile
 
     //Import path for preprocessors that allow including other files
 	this._importPath = '.' + path.dirname(inputFile)
@@ -52,10 +50,10 @@ StyleProcessor.prototype.build = co.wrap(function * () {
 		let _process = false
 		if(processor.file === undefined) {
 			_process = true
-		} else if(processor.file === this_inputFileName) {
+		} else if(processor.file === this._inputFileName) {
 			_process = true
 		} else if(processor.file instanceof []) {
-			if(processor.file.indexOf(this_inputFileName) != -1) {
+			if(processor.file.indexOf(this._inputFileName) != -1) {
 				_process = true
 			}
 		}
