@@ -1,7 +1,12 @@
 {
     "env": {
         "node": true,
-        "es6": true
+        "es6": true,
+        "mocha": true
+    },
+    "globals": {
+        "expect": false,
+        "helper": false
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -20,6 +25,7 @@
         "semi": [
             "error",
             "never"
-        ]
+        ],
+        "no-case-declarations": "off"
     }
 }
