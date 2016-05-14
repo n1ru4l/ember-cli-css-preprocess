@@ -1,10 +1,10 @@
 'use strict'
 
-const fs = require('fs')
-const co = require('co')
-const compatibleProcessors = require('./package').compatibleProcessors;
-const semver = require('semver')
-const finder = require('find-package-json')
+const fs 					= require('fs')
+const co 					= require('co')
+const compatibleProcessors 	= require('./package').compatibleProcessors;
+const semver 				= require('semver')
+const finder 				= require('find-package-json')
 
 /**
  * A module for loading a style processor
@@ -32,7 +32,7 @@ const _loadModule = function(moduleName) {
     } catch (err) {
         switch (err.code) {
             case 'MODULE_NOT_FOUND':
-                throw new Error(`Processor ${moduleName} not found. Please install it first`)
+                throw new Error(`Processor ${moduleName} not found. Please install it first (npm install ${moduleName} --save)`)
             default:
                 throw err
         }
@@ -65,10 +65,10 @@ const _loadProcessor = function (processorName) {
         throw new Error(`Processor ${processorName} is not supported yet.`)
     }
 
-	const module = _loadModule(processorName)
+	const _module = _loadModule(processorName)
 	const processor = require(`./processors/${processorName}`)
 
-	return processor(module)
+	return processor(_module)
 }
 
 /**
@@ -78,14 +78,14 @@ const _loadProcessor = function (processorName) {
  * @returns {*} processor
  */
 function loadProcessor(moduleName) {
-	let module = _processors[moduleName]
-	if(module !== undefined) {
-		return module
+	let _module = _processors[moduleName]
+	if(_module !== undefined) {
+		return _module
 	}
 
-	module = _loadProcessor(moduleName)
-	_processors[moduleName] = module
-	return module
+	_module = _loadProcessor(moduleName)
+	_processors[moduleName] = _module
+	return _module
 }
 
 module.exports = loadProcessor

@@ -1,3 +1,4 @@
+'use strict'
 const deepMerge = require('deepmerge')
 
 /**
@@ -7,14 +8,14 @@ const deepMerge = require('deepmerge')
  */
 
 module.exports = function(postcss) {
-	return function(content, processor, importPath) {
+	return function(content, processor, fileInfo) {
 		if(!processor.plugins) {
 	        throw new Error('Please add plugins to your postcss-process!')
 	    }
 
 		var processOptions = {
 			//We need this for some plugins (e.q. precss to find imports)
-			from: 'app/styles/' + filename,
+			from: fileInfo.inputFile,
 			to: 'styles/' //TODO: What do with this?
 		}
 
@@ -41,7 +42,7 @@ module.exports = function(postcss) {
 
 	    return new Promise(function(res, rej) {
 	        postcss(postcssPlugins)
-	        .process(data, processOptions)
+	        .process(content, processOptions)
 
 	        .then(function(dataProcessed) {
 	            return res(dataProcessed.css)

@@ -1,3 +1,4 @@
+'use strict'
 const deepMerge = require('deepmerge')
 
 /**
@@ -7,9 +8,9 @@ const deepMerge = require('deepmerge')
  */
 
 module.exports = function(less) {
-	return function(content, processor, importPath) {
+	return function(content, processor, fileInfo) {
 		const optionsConfig   = processor.options || {}
-	    const optionsDefault  = { plugins: [], paths: [importPath] }
+	    const optionsDefault  = { plugins: [], paths: [fileInfo.importPath] }
 	    const options         = null
 
 	    //Load plugins
@@ -26,7 +27,7 @@ module.exports = function(less) {
 	    options = deepMerge(options, optionsDefault)
 
 	    return new Promise(function(res, rej) {
-	        less.render(data, options, function(errLess, result) {
+	        less.render(content, options, function(errLess, result) {
 	            if(errLess) {
 
 	                //Concat error message

@@ -1,14 +1,14 @@
 'use strict'
 
-const CachingWriter       = require('broccoli-caching-writer')
-const merge               = require('lodash.merge') // can we replace merge width deepMerge completely?
-const mkdirp              = require('mkdirp-promise')
-const path                = require('path')
-const fs                  = require('fs-promise')
-const includePathSearcher = require('include-path-searcher')
-const co 				  = require('co')
+const CachingWriter 		= require('broccoli-caching-writer')
+const merge 				= require('lodash.merge') // can we replace merge width deepMerge completely?
+const mkdirp 				= require('mkdirp-promise')
+const path 					= require('path')
+const fs 					= require('fs-promise')
+const includePathSearcher 	= require('include-path-searcher')
+const co 					= require('co')
 
-const loadProcessor		  = require('./_load-processor')
+const loadProcessor 		= require('./_load-processor')
 
 StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
@@ -24,49 +24,57 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
     });
 
 	this._processors 	 = _options.processors
-	this._inputFilePath  = this.inputPaths[0]
+	this._inputFilePath  = `.${inputFile}`
 	this._inputFileName  = path.basename(this._inputFilePath, `.${_options.ext}`) // base filename without extension
-    this._outputFile     = path.join(this.outputPath, outputFile)
+    this._outputFile     = outputFile
 
     //Import path for preprocessors that allow including other files
 	this._importPath = '.' + path.dirname(inputFile)
 
-	this._outputFileName = path.join(this.outputPath, this.outputFile)
+	//Information which is passed to every single style processor
+	this._fileInfo = {
+		inputFile: this._inputFilePath,
+		importPath: this._importPath,
+		extension: _options.ext
+	}
 }
 
 /**
- * Handles the fileContent transformartion
- * 
+ * Handles the fileContent transformation
+ *
  * @returns {Promise}
  */
 StyleProcessor.prototype.build = co.wrap(function * () {
 	let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
 
-	this._processors.forEach((processor) => {
-
-		let process = false
+	for(let i = 0; i < this._processors.length; i++) {
+		const processor = this._processors[i]
+		let _process = false
 		if(processor.file === undefined) {
-			process = true
+			_process = true
 		} else if(processor.file === this_inputFileName) {
-			process = true
+			_process = true
 		} else if(processor.file instanceof []) {
 			if(processor.file.indexOf(this_inputFileName) != -1) {
-				process = true
+				_process = true
 			}
 		}
 
-		if(process) {
-			const _processor = loadProcessor(processorName.type)
-			fileContents = yield _processor(fileContents, processor, this._importPath)
+		if(_process) {
+			const _processor = loadProcessor(processor.type)
+			fileContents = yield _processor(fileContents, processor, this._fileInfo)
 		}
-	})
+	}
 
-	const outputFileDir = path.dirname(this._outputFile)
+	const outputFile = path.join(this.outputPath, this._outputFile)
+	const outputFileDir = path.dirname(outputFile)
 	yield mkdirp(outputFileDir)
 
-	yield fs.write(this._outputFile, fileContents, {
+	yield fs.writeFile(outputFile, fileContents, {
 		encoding: 'utf8'
 	})
 
 	return Promise.resolve()
 })
+
+module.exports = StyleProcessor

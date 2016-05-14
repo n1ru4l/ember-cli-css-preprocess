@@ -1,3 +1,4 @@
+'use strict'
 const deepMerge = require('deepmerge')
 
 /**
@@ -7,12 +8,12 @@ const deepMerge = require('deepmerge')
  */
 
 module.exports = function(nodeSass) {
-	return function(content, processor, importPath) {
+	return function(content, processor, fileInfo) {
 		return new Promise((res, rej) => {
 
 	        var optionsDefault = {
 	            data: content,
-	            includePaths: [importPath]
+	            includePaths: [fileInfo.importPath]
 	        }
 
 	        var optionsConfig = processor.options || {}
