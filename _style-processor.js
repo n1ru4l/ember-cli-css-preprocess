@@ -6,6 +6,9 @@ const path = require('path')
 const fs = require('fs-promise')
 const co = require('co')
 
+const isGlob = require('is-glob')
+const minimatch = require('minimatch')
+
 const loadProcessor = require('./_load-processor')
 
 StyleProcessor.prototype = Object.create(CachingWriter.prototype)
@@ -21,10 +24,13 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
 		annotation: _options.annotation
 	})
 
-	this._processors 	 = _options.processors
-	this._inputFilePath  = `.${inputFile}`
-	this._inputFileName  = path.basename(this._inputFilePath, `.${_options.ext}`) // base filename without extension
-	this._outputFile     = outputFile
+	// this._projectRoot = _options.project.Project.root
+	this._projectRoot = _options.projectRoot
+
+	this._processors = _options.processors
+	this._inputFilePath = `.${inputFile}`
+	this._inputFileName = path.relative(`${_options.projectRoot}/app/styles`, this._inputFilePath) // relative path
+	this._outputFile = outputFile
 
     //Import path for preprocessors that allow including other files
 	this._importPath = '.' + path.dirname(inputFile)
@@ -47,18 +53,8 @@ StyleProcessor.prototype.build = co.wrap(function * () {
 
 	for(let i = 0; i < this._processors.length; i++) {
 		const processor = this._processors[i]
-		let _process = false
-		if(processor.file === undefined) {
-			_process = true
-		} else if(processor.file === this._inputFileName) {
-			_process = true
-		} else if(processor.file instanceof []) {
-			if(processor.file.indexOf(this._inputFileName) != -1) {
-				_process = true
-			}
-		}
 
-		if(_process) {
+		if(this._checkProcess(processor)) {
 			const _processor = loadProcessor(processor.type)
 			fileContents = yield _processor(fileContents, processor, this._fileInfo)
 		}
@@ -74,5 +70,35 @@ StyleProcessor.prototype.build = co.wrap(function * () {
 
 	return Promise.resolve()
 })
+
+/**
+ * Check if a file should be processed by an processor
+ *
+ * @returns {boolean} _process
+ */
+StyleProcessor.prototype._checkProcess = function(processor) {
+	let _process = false
+	const fileName = this._inputFileName
+
+	if(processor.filter === undefined) {
+		_process = true
+	} else if(processor.filter instanceof String) {
+		if(isGlob(processor.filter)) {
+			_process = minimatch(fileName, processor.filter)
+		} else if(fileName === processor.filter) {
+			_process = true
+		}
+	} else if(processor.filter instanceof Array) {
+		processor.filter.forEach((filter) => {
+			if(isGlob(filter)) {
+				_process = minimatch(fileName, filter)
+			} else if(fileName === filter) {
+				_process = true
+			}
+		})
+	}
+
+	return _process
+}
 
 module.exports = StyleProcessor
