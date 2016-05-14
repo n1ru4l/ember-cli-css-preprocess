@@ -1,50 +1,61 @@
 {
   "name": "ember-cli-css-preprocess",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
-      "test": "echo 'No tests bro :('"
+    "test": "./node_modules/.bin/gulp test",
+    "prepublish": ""
   },
   "keywords": [
-      "ember-addon",
-      "ember-cli",
-      "css",
-      "sass",
-      "scss",
-      "preprocessor",
-      "preprocess",
-      "postprocessor",
-      "postprocess",
-      "postcss",
-      "node-sass",
-      "less"
+    "ember-addon",
+    "ember-cli",
+    "css",
+    "sass",
+    "scss",
+    "preprocessor",
+    "preprocess",
+    "postprocessor",
+    "postprocess",
+    "postcss",
+    "node-sass",
+    "less"
   ],
-  "author": "Laurin Quast <laurinquast@googlemail.com> (https://github.com/n1ru4l/)",
-  "repository" : {
-      "type" : "git",
-      "url" : "https://github.com/n1ru4l/ember-cli-css-preprocess.git"
+  "author": "Laurin Quast <laurinquast@googlemail.com> (https://github.com/n1ru4l)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n1ru4l/ember-cli-css-preprocess.git"
   },
   "bugs": {
-      "url": "https://github.com/n1ru4l/ember-cli-css-preprocess/issues",
-      "email": "laurinquast@googlemail.com"
+    "url": "https://github.com/n1ru4l/ember-cli-css-preprocess/issues",
+    "email": "laurinquast@googlemail.com"
   },
   "license": "MIT",
   "dependencies": {
     "broccoli-caching-writer": "^2.2.1",
     "broccoli-merge-trees": "^1.1.1",
+    "co": "^4.6.0",
     "deepmerge": "^0.2.10",
     "ember-cli-version-checker": "^1.1.6",
-    "include-path-searcher": "^0.1.0",
-    "less": "^2.5.3",
+    "find-package-json": "^1.0.0",
+    "fs-promise": "^0.5.0",
+    "is-glob": "^2.0.1",
     "lodash.merge": "^3.3.2",
+    "minimatch": "^3.0.0",
     "mkdirp": "^0.5.1",
-    "node-sass": "^3.4.2",
-    "postcss": "^5.0.14"
+    "mkdirp-promise": "^2.0.0",
+    "semver": "^5.1.0"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0"
   },
-  "engines" : {
-      "node" : ">=5.2.0"
+  "compatibleProcessors": {
+    "postcss": "^5.0.14",
+    "node-sass": "^3.4.2",
+    "less": "^2.5.3"
+  },
+  "engines": {
+    "node": ">=4.2.4"
   }
 }

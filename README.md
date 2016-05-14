@@ -1,4 +1,4 @@
-# ember-cli-css-preprocess
+# ember-cli-css-preprocess ![Build status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")
 Preprocess your stylesheets with multiple preprocessors.
 
 Currently supported preprocessors:
@@ -43,12 +43,14 @@ And add the the basic options:
 ### Adding a preprocessor
 Currently there a two available preprocessors which you can chain in any order (even multiple times if you want).
 
-Available processors:
-- sass
+Supported processors:
+- node-sass
 - postcss
 - less
 
 To add on simply pass in an object to the `processors`-Array containing a `type`-Property with the processor title.
+Furthermore you have to install the corresponding npm-module with the same name (e.g. `npm install autoprefixer --save-dev`).
+
 
 #### Adding a Sass Preprocessor:
 
@@ -57,7 +59,7 @@ To add on simply pass in an object to the `processors`-Array containing a `type`
         // Add options here
         styleProcessorOptions: {
             processors: [{
-                type: 'sass'
+                type: 'node-sass'
             }],
             extension: 'scss'
         }
@@ -143,7 +145,7 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
         // Add options here
         styleProcessorOptions: {
             processors: [{
-                type: 'sass'
+                type: 'node-sass'
             }, {
                 type: 'postcss',
                 plugins: [{
@@ -163,7 +165,7 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
 
 This example should clarify how to chain preprocessors. The position inside the `processors`-array determines the order in which the stylesheets are processed by each preprocessors (from top to bottom).
 
-#### Setup processor to parse specific files only:
+#### Setup processor to parse specific files only (Filter):
 
 ```javascript
     var app = new EmberApp(defaults, {
@@ -171,7 +173,7 @@ This example should clarify how to chain preprocessors. The position inside the 
         styleProcessorOptions: {
             processors: [{
                 type: 'postcss',
-                file: ['test.css'],
+                filter: ['test.css'],
                 plugins: [{
                     module: require('autoprefixer'),
                     options: {
@@ -181,7 +183,7 @@ This example should clarify how to chain preprocessors. The position inside the 
                     }
                 ]
             }, {
-                type: 'sass'
+                type: 'node-sass'
             }
             ],
             extension: 'css'
@@ -189,4 +191,5 @@ This example should clarify how to chain preprocessors. The position inside the 
     ...
 ```
 
-With this setup the postcss processor will only process the file `test.css`. The `file` property can either be a string or an array of strings.
+With this setup the postcss processor will only process the file `test.css`. The `filter` property can either be a string or an array of strings.
+The filter supports the glob pattern.
