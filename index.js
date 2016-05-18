@@ -7,19 +7,18 @@ const EmberVersionChecker = require('ember-cli-version-checker')
 
 function StyleProcessorPlugin(optionsFn) {
 	this.name = 'ember-cli-css-preprocess'
-
 	this.ext = 'css'
 	this.optionsFn = optionsFn
 }
 
 StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, inputOptions) {
-	var options = merge({}, this.optionsFn(), inputOptions)
+	const options = merge({}, this.optionsFn(), inputOptions)
 
-	var paths = options.outputPaths
-	var ext = options.extension ? options.extension : this.ext
+	const paths = options.outputPaths
+	const ext = options.extension ? options.extension : this.ext
 
 	var trees = Object.keys(paths).map(function(file) {
-		var input = path.join(inputPath, file +  '.' + ext)
+		var input = path.join(inputPath, file + '.' + ext)
 		var output = paths[file]
 		return new StyleProcessor([tree], input, output, options)
 	})
@@ -33,8 +32,8 @@ module.exports = {
 		return !EmberVersionChecker.isAbove(this, '0.2.0')
 	},
 	styleProcessorOptions: function() {
-		// var env = process.env.EMBER_ENV
-		var options = (this.app && this.app.options.styleProcessorOptions) || {}
+		// const env = process.env.EMBER_ENV
+		const options = (this.app && this.app.options.styleProcessorOptions) || {}
 		options.outputFile = options.outputFile || this.project.name() + '.css'
 		options.projectRoot = this.app.project.root
 		return options
@@ -46,7 +45,7 @@ module.exports = {
 		this.app = app
 		this._super.included.apply(this, arguments)
 
-		if (this.shouldSetupRegistryInIncluded()) {
+		if(this.shouldSetupRegistryInIncluded()) {
 			this.setupPreprocessorRegistry('parent', app.registry)
 		}
 	}

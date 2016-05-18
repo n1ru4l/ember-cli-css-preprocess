@@ -13,6 +13,11 @@ describe('Module: _loadProcessor', function() {
 		yield npm.uninstall(processor)
 	})
 
+	after(function * () {
+		this.timeout(0)
+		yield npm.uninstall(processor)
+	})
+
 	it('can not load a processor that is not supported', function * () {
 		try {
 			loadProcessor('this-Module-will-never-exists-187')

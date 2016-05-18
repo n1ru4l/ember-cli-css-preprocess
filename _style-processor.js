@@ -14,34 +14,35 @@ const loadProcessor = require('./_load-processor')
 StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
 
-function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
+function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
+  
+  if ( !( this instanceof StyleProcessor ) ) {
+    return new StyleProcessor( inputNodes, inputFile, outputFile, _options )
+  }
 
-	if (!(this instanceof StyleProcessor)) {
-		return new StyleProcessor(inputNodes, inputFile, outputFile, _options)
-	}
+  CachingWriter.call( this, inputNodes, {
+    annotation: _options.annotation
+  } )
 
-	CachingWriter.call(this, inputNodes, {
-		annotation: _options.annotation
-	})
+  // this._projectRoot = _options.project.Project.root
+  this._projectRoot = _options.projectRoot
 
-	// this._projectRoot = _options.project.Project.root
-	this._projectRoot = _options.projectRoot
+  this._processors = _options.processors
+  this._inputFilePath = `.${inputFile}`
+  this._inputFileName = path.relative( `${_options.projectRoot}/app/styles`, this._inputFilePath ) // relative path
+  this._outputFile = outputFile
 
-	this._processors = _options.processors
-	this._inputFilePath = `.${inputFile}`
-	this._inputFileName = path.relative(`${_options.projectRoot}/app/styles`, this._inputFilePath) // relative path
-	this._outputFile = outputFile
+  //Import path for preprocessors that allow including other files
+  this._importPath = '.' + path.dirname( inputFile )
 
-    //Import path for preprocessors that allow including other files
-	this._importPath = '.' + path.dirname(inputFile)
-
-	//Information which is passed to every single style processor
-	this._fileInfo = {
-		inputFile: this._inputFilePath,
-		importPath: this._importPath,
-		extension: _options.ext
-	}
+  //Information which is passed to every single style processor
+  this._fileInfo = {
+    inputFile: this._inputFilePath,
+    importPath: this._importPath,
+    extension: _options.ext
+  }
 }
+
 
 /**
  * Handles the fileContent transformation
@@ -49,26 +50,26 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
  * @returns {Promise}
  */
 StyleProcessor.prototype.build = co.wrap(function * () {
-	let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
+  let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
 
-	for(let i = 0; i < this._processors.length; i++) {
-		const processor = this._processors[i]
+  for(let i = 0; i < this._processors.length; i++) {
+    const processor = this._processors[i]
 
-		if(this._checkProcess(processor.filter)) {
-			const _processor = loadProcessor(processor.type)
-			fileContents = yield _processor(fileContents, processor, this._fileInfo)
-		}
-	}
+    if(this._checkProcess(processor.filter)) {
+      const _processor = loadProcessor(processor.type)
+      fileContents = yield _processor(fileContents, processor, this._fileInfo)
+    }
+  }
 
-	const outputFile = path.join(this.outputPath, this._outputFile)
-	const outputFileDir = path.dirname(outputFile)
-	yield mkdirp(outputFileDir)
+  const outputFile = path.join(this.outputPath, this._outputFile)
+  const outputFileDir = path.dirname(outputFile)
+  yield mkdirp(outputFileDir)
 
-	yield fs.writeFile(outputFile, fileContents, {
-		encoding: 'utf8'
-	})
+  yield fs.writeFile(outputFile, fileContents, {
+    encoding: 'utf8'
+  })
 
-	return Promise.resolve()
+  return Promise.resolve()
 })
 
 /**

@@ -4,7 +4,7 @@
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp mocha",
+    "test": "./node_modules/.bin/gulp test",
     "prepublish": ""
   },
   "keywords": [

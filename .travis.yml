@@ -2,4 +2,4 @@ language: node_js
 node_js:
     - "4"
     - "node"
-script: ./node_modules/.bin/gulp test
+script: ./node_modules/.bin/gulp travis
