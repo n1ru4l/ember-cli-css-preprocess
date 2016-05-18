@@ -15,32 +15,28 @@ StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
 
 function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
+	if ( !( this instanceof StyleProcessor ) ) {
+		return new StyleProcessor( inputNodes, inputFile, outputFile, _options )
+	}
 
-  if ( !( this instanceof StyleProcessor ) ) {
-    return new StyleProcessor( inputNodes, inputFile, outputFile, _options )
-  }
+	CachingWriter.call( this, inputNodes, {
+		annotation: _options.annotation
+	})
 
-  CachingWriter.call( this, inputNodes, {
-    annotation: _options.annotation
-  } )
+	this._projectRoot = _options.projectRoot
+	this._processors = _options.processors
+	this._inputFilePath = `.${inputFile}`
+	this._inputFileName = path.relative( `${_options.projectRoot}/app/styles`, this._inputFilePath ) // relative path
+	this._outputFile = outputFile
 
-  // this._projectRoot = _options.project.Project.root
-  this._projectRoot = _options.projectRoot
-
-  this._processors = _options.processors
-  this._inputFilePath = `.${inputFile}`
-  this._inputFileName = path.relative( `${_options.projectRoot}/app/styles`, this._inputFilePath ) // relative path
-  this._outputFile = outputFile
-
-  //Import path for preprocessors that allow including other files
-  this._importPath = '.' + path.dirname( inputFile )
-
-  //Information which is passed to every single style processor
-  this._fileInfo = {
-    inputFile: this._inputFilePath,
-    importPath: this._importPath,
-    extension: _options.ext
-  }
+	//Import path for preprocessors that allow including other files
+	this._importPath = '.' + path.dirname( inputFile )
+	//Information which is passed to every single style processor
+	this._fileInfo = {
+		inputFile: this._inputFilePath,
+		importPath: this._importPath,
+		extension: _options.ext
+	}
 }
 
 
