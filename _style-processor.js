@@ -15,7 +15,7 @@ StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
 
 function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
-  
+
   if ( !( this instanceof StyleProcessor ) ) {
     return new StyleProcessor( inputNodes, inputFile, outputFile, _options )
   }
@@ -50,26 +50,23 @@ function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
  * @returns {Promise}
  */
 StyleProcessor.prototype.build = co.wrap(function * () {
-  let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
+	let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
 
-  for(let i = 0; i < this._processors.length; i++) {
-    const processor = this._processors[i]
+	for(let i = 0; i < this._processors.length; i++) {
+		const processor = this._processors[i]
+		if(this._checkProcess(processor.filter)) {
+			const _processor = loadProcessor(processor.type)
+			fileContents = yield _processor(fileContents, processor, this._fileInfo)
+		}
+	}
 
-    if(this._checkProcess(processor.filter)) {
-      const _processor = loadProcessor(processor.type)
-      fileContents = yield _processor(fileContents, processor, this._fileInfo)
-    }
-  }
-
-  const outputFile = path.join(this.outputPath, this._outputFile)
-  const outputFileDir = path.dirname(outputFile)
-  yield mkdirp(outputFileDir)
-
-  yield fs.writeFile(outputFile, fileContents, {
-    encoding: 'utf8'
-  })
-
-  return Promise.resolve()
+	const outputFile = path.join(this.outputPath, this._outputFile)
+	const outputFileDir = path.dirname(outputFile)
+	yield mkdirp(outputFileDir)
+	yield fs.writeFile(outputFile, fileContents, {
+		encoding: 'utf8'
+	})
+	return Promise.resolve()
 })
 
 /**
