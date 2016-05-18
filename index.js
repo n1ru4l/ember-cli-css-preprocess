@@ -15,11 +15,19 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 	const options = merge({}, this.optionsFn(), inputOptions)
 
 	const paths = options.outputPaths
-	const ext = options.extension ? options.extension : this.ext
+	const extensionDefault = options.extension ? options.extension : this.ext
 
-	var trees = Object.keys(paths).map(function(file) {
-		var input = path.join(inputPath, file + '.' + ext)
-		var output = paths[file]
+	// http://stackoverflow.com/a/6582227/4202031
+	const patternExtension =  /\.([0-9a-z]+)(?:[\?#]|$)/i // Returns array [ '.css', 'css' ]
+
+	const trees = Object.keys(paths).map(function(file) {
+
+		let extension = file.match(patternExtension)
+		extension = extension ? extension[1] : extensionDefault
+
+		const inputFileName = `${file}.${extension}`
+		const input = path.join(inputPath, inputFileName)
+		const output = paths[file]
 		return new StyleProcessor([tree], input, output, options)
 	})
 

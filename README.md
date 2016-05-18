@@ -165,6 +165,33 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
 
 This example should clarify how to chain preprocessors. The position inside the `processors`-array determines the order in which the stylesheets are processed by each preprocessors (from top to bottom).
 
+#### Using multiple input stylesheets
+
+Multiple stylesheets are added by using the `outputPaths`-property (, which is not part of the `styleProcessorOptions`-property).
+
+[Configuring Output Paths (Ember CLI Reference)](http://ember-cli.com/user-guide/#configuring-output-paths)
+
+In addition to the default configuration you can add an extension to your `css`-value.
+
+```javascript
+... // styleProcessorOptions
+			extension: 'scss' // specified extension, overrides default: css
+		},
+		outputPaths: {
+	    	app: {
+				css: {
+					'app': 'assets/lel.css', // will parse app/styles/app.scss
+					'amk.css': 'assets/toll.css', //will parse app/styles/amk.css
+					'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.css
+					'trolol/bars': 'assets/foo.css' //will parse app/trolol/bars.scss
+				}
+			}
+		}
+
+```
+
+
+
 #### Setup processor to parse specific files only (Filter):
 
 ```javascript
