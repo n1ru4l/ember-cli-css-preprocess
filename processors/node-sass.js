@@ -11,14 +11,25 @@ module.exports = function(nodeSass) {
 	return function(content, processor, fileInfo) {
 		return new Promise((res, rej) => {
 
-			var optionsDefault = {
+			const optionsDefault = {
 				data: content,
-				includePaths: [fileInfo.importPath]
+				includePaths: [fileInfo.importPath],
+				file: fileInfo.inputFile
 			}
 
-			var optionsConfig = processor.options || {}
+			const optionsSourcemap = {
+				sourceMapEmbed: true,
+				sourceMapContents: true,
+				sourceMap: true
+			}
 
-			var options = deepMerge(optionsConfig, optionsDefault)
+			const optionsConfig = processor.options || {}
+
+			let options = deepMerge(optionsConfig, optionsDefault)
+
+			if(processor.sourcemaps === true) {
+				options = deepMerge(options, optionsSourcemap)
+			}
 
 			nodeSass.render(options, function(errSass, result) {
 

@@ -1,4 +1,5 @@
-# ember-cli-css-preprocess ![Build status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")
+# ember-cli-css-preprocess  [![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
+
 Preprocess your stylesheets with multiple preprocessors.
 
 Currently supported preprocessors:
@@ -59,7 +60,9 @@ Furthermore you have to install the corresponding npm-module with the same name 
         // Add options here
         styleProcessorOptions: {
             processors: [{
-                type: 'node-sass'
+                type: 'node-sass',
+				sourcemaps: true,  // enables sourcemaps
+				options: {}
             }],
             extension: 'scss'
         }
@@ -68,7 +71,7 @@ Furthermore you have to install the corresponding npm-module with the same name 
 
 By changing the `extension`-property you can specify the extension of your stylesheets. Because we are only processing our sheets with Sass we set the extension to `scss`.
 
-Annotation: You can also pass all setting you could pass to [node-sass](https://github.com/sass/node-sass) by setting the `options`-object in the processor object. By default the only setting is the `includePath` which is set to your `styles`-folder. This allows you to include any stylesheet in your folder with the `@import`-rule
+Annotation: You can also pass all setting you could pass to [node-sass](https://github.com/sass/node-sass) by setting the `options`-object in the processor object. By default the only settings are the `includePath` which is set to your `styles`-folder and the sourcemap settings if `sourcemaps` is set to `true`. This allows you to include any stylesheet in your folder with the `@import`-rule
 
 #### Adding a PostCSS Preprocessor:
 
@@ -182,7 +185,7 @@ In addition to the default configuration you can add an extension to your `css`-
 				css: {
 					'app': 'assets/lel.css', // will parse app/styles/app.scss
 					'amk.css': 'assets/toll.css', //will parse app/styles/amk.css
-					'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.css
+					'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.less
 					'trolol/bars': 'assets/foo.css' //will parse app/trolol/bars.scss
 				}
 			}
@@ -219,4 +222,37 @@ In addition to the default configuration you can add an extension to your `css`-
 ```
 
 With this setup the postcss processor will only process the file `test.css`. The `filter` property can either be a string or an array of strings.
-The filter supports the glob pattern.
+
+An example for using the glob pattern:
+
+```javascript
+    var app = new EmberApp(defaults, {
+        // Add options here
+        styleProcessorOptions: {
+            processors: [{
+                type: 'node-sass',
+                filter: ['*.scss']
+            }, {
+                type: 'less',
+				filter: ['*.less']
+            }
+            ],
+            extension: 'css'
+        },
+		outputPaths: {
+	    	app: {
+				css: {
+					'app': 'assets/lel.css', // input file contents will equal input file contents
+					'amk.css': 'assets/toll.css', // input file contents will equal input file contents
+					'hippo.less': 'assets/eichhorn.css', // will only be processed by less processor
+					'trolol.scss': 'assets/foo.css' // will only be processed by less processor
+				}
+			}
+		},
+		extension; 'css'
+    ...
+```
+
+#### Resources
+
+(Github: BroccoliCachingWriter)[https://github.com/ember-cli/broccoli-caching-writer]

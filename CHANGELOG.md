@@ -3,6 +3,9 @@
 * Processor modules are no longer dependencies and must be installed manually
 * Removes many semicolons ;)
 * Adds eslint
+* Changes file to filter
+* Implements glob pattern for filter
+* Fixes node-sass sourcemap file
 
 
 # 0.0.8

@@ -22,10 +22,13 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 
 	const trees = Object.keys(paths).map(function(file) {
 
+		let inputFileName = file
 		let extension = file.match(patternExtension)
-		extension = extension ? extension[1] : extensionDefault
 
-		const inputFileName = `${file}.${extension}`
+		if(!extension) {
+			inputFileName = `${file}.${extensionDefault}`
+		}
+
 		const input = path.join(inputPath, inputFileName)
 		const output = paths[file]
 		return new StyleProcessor([tree], input, output, options)
