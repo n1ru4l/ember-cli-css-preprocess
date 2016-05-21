@@ -19,6 +19,7 @@ StyleProcessor.prototype.constructor = StyleProcessor
  * @extends CachingWriter
  */
 function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
+
 	if(!(this instanceof StyleProcessor)) {
 		return new StyleProcessor(inputNodes, inputFile, outputFile, _options)
 	}
@@ -35,7 +36,7 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
 
 	//Import path for preprocessors that allow including other files
 	this._importPath = '.' + path.dirname(inputFile)
-	
+
 	//Information which is passed to every single style processor
 	this._fileInfo = {
 		inputFile: this._inputFilePath,
@@ -80,22 +81,28 @@ StyleProcessor.prototype.build = co.wrap(function*() {
  * @private
  */
 StyleProcessor.prototype._checkProcess = function(filter) {
-	let _process = false
-	const fileName = this._inputFileName
-
-	function checkProcess(filter) {
-		if (isGlob(filter)) {
-			return minimatch(fileName, filter)
-		}
-		return (fileName === filter)
-	}
 
 	if (!filter) {
-		_process = true
-	} else if (typeof filter === 'string') {
-		_process = checkProcess(filter)
+		return true
+	}
+
+	const fileName = this._inputFileName
+	let _process = false
+
+	function checkProcess(filter) {
+
+		if (isGlob(filter)) {
+			_process = minimatch(fileName, filter)
+			return
+		}
+
+		_process = (fileName === filter)
+	}
+
+	if (typeof filter === 'string') {
+		checkProcess(filter)
 	} else if (filter instanceof Array) {
-		_process = filter.every(checkProcess)
+		filter.forEach(checkProcess)
 	}
 
 	return _process

@@ -7,8 +7,8 @@ const deepMerge = require('deepmerge')
  * @module nodeSass
  */
 
-module.exports = function NodeSassProcessor(nodeSass) {
-	return function(content, processor, fileInfo) {
+module.exports = function NodeSassProcessorInitializer(nodeSass) {
+	return function NodeSassProcessor(content, processor, fileInfo) {
 		return new Promise((res, rej) => {
 
 			const optionsDefault = {
@@ -31,7 +31,7 @@ module.exports = function NodeSassProcessor(nodeSass) {
 				options = deepMerge(options, optionsSourcemap)
 			}
 
-			nodeSass.render(options, function(errSass, result) {
+			nodeSass.render(options, (errSass, result) => {
 
 				if(errSass) {
 					//Transform sass error to broccoli error

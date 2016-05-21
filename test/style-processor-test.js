@@ -8,17 +8,17 @@ const options = {
 	extension: 'css'
 }
 
-function getStyleProcessorConstructor(inputFile) {
+function getStyleProcessorConstructor(inputFile, outputFilename) {
 	return {
 		inputNodes: [],
-		inputFile: typeof inputFile === 'string' ? inputFile : '/test/app/styles/foo.css',
-		outputFile: 'test/dist/assets/bar.css',
+		inputFile: typeof inputFile === 'string' ? `/test/app/styles/${inputFile}` : '/test/app/styles/foo.css',
+		outputFile: typeof outputFilename === 'string' ? outputFilename : 'assets/foo.css',
 		options: options
 	}
 }
 
-function getStyleProcessorInstance(inputFile) {
-	const opts = getStyleProcessorConstructor(inputFile)
+function getStyleProcessorInstance(inputFile, outputFilename) {
+	const opts = getStyleProcessorConstructor(inputFile, outputFilename)
 	return new StyleProcessor(opts.inputNodes, opts.inputFile, opts.outputFile, opts.options)
 }
 
@@ -32,36 +32,63 @@ describe('Class: StyleProcessor', function() {
 		expect(styleProcessor).to.be.instanceof(StyleProcessor)
 	})
 
-	describe('check files to process', function() {
+	describe('can check if a file should be processed by a style processor', function() {
 
-		// inputPath should always be 'absolute' to project root
-		const styleProcessor = getStyleProcessorInstance('/test/app/styles/stylesheet.css')
+		const styleProcessor = getStyleProcessorInstance('stylesheet.css')
 
-		it('can filter filename', function*() {
+		it('string which equals filename', function*() {
 
 			const result = styleProcessor._checkProcess('stylesheet.css')
 			expect(result).to.be.true
 
 		})
 
-		it('can not filter filename', function*() {
+		it('string which not equals filename', function*() {
 
 			const result = styleProcessor._checkProcess('foo.css')
 			expect(result).to.be.false
 
 		})
 
-		it('can filter glob', function*() {
+		it('glob string that matches filename', function*() {
 
 			const result = styleProcessor._checkProcess('*.css')
 			expect(result).to.be.true
 
 		})
 
-		it('can not filter glob', function*() {
+		it('glob string that does not match filename', function*() {
 
 			const result = styleProcessor._checkProcess('*.scss')
 			expect(result).to.be.false
+
+		})
+
+		it('array with string that matches filename', function*() {
+
+			const result = styleProcessor._checkProcess(['stylesheet.css'])
+			expect(result).to.be.true
+
+		})
+
+		it('array with glob string that does not match filename', function*() {
+
+			const result = styleProcessor._checkProcess(['!stylesheet.css'])
+			expect(result).to.be.false
+
+		})
+
+		it('array with additional negation', function*() {
+
+			const result = styleProcessor._checkProcess(['stylesheet.css', '!*.css'])
+			expect(result).to.be.fale
+
+		})
+
+		it('array with additional affirmation', function*() {
+
+			const result = styleProcessor._checkProcess(['!*.css', 'stylesheet.css'])
+			expect(result).to.be.true
 
 		})
 	})

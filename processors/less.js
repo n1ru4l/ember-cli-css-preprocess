@@ -7,23 +7,30 @@ const deepMerge = require('deepmerge')
  * @module less
  */
 
-module.exports = function LessProcessor(less) {
-	return function(content, processor, fileInfo) {
-		const optionsConfig = processor.options || {}
-		const optionsDefault = { plugins: [], paths: [fileInfo.importPath] }
-		let options = null
-		//Load plugins
-		if(processor.plugins) {
-			optionsDefault.plugins = processor.plugins.reduce(function(plugins, plugin) {
-				var pluginOptions = plugin.options || null
-				plugins.push(new plugin.module(pluginOptions))
-				return plugins
-			}, [])
-		}
-
-		options = deepMerge({}, optionsDefault, optionsConfig)
-		options = deepMerge(options, optionsDefault)
+module.exports = function LessProcessorInitializer(less) {
+	return function LessProcessor(content, processor, fileInfo) {
 		return new Promise(function(res, rej) {
+
+			const optionsConfig = processor.options || {}
+			const optionsDefault = {
+				plugins: [],
+				paths: [fileInfo.importPath]
+			}
+
+			let options = null
+
+			//Load plugins
+			if(processor.plugins) {
+				processor.plugins.forEach((plugin) => {
+					const Module = plugin.module
+					const pluginOptions = plugin.options || null
+					optionsDefault.plugins.push(new Module(pluginOptions))
+				})
+			}
+
+			options = deepMerge({}, optionsDefault, optionsConfig)
+			options = deepMerge(options, optionsDefault)
+
 			less.render(content, options, function(errLess, result) {
 				if(errLess) {
 					//Concat error message

@@ -6,55 +6,54 @@
  * @module postcss
  */
 
-module.exports = function PostCSSProcessor(postcss) {
-	return function(content, processor, fileInfo) {
-		if(!processor.plugins) {
-			throw new Error('Please add plugins to your postcss-process!')
-		}
+module.exports = function PostCSSProcessorInitializer(postcss) {
+	return function PostCSSProcessor(content, processor, fileInfo) {
+		return new Promise((res, rej) => {
 
-		var processOptions = {
-			//We need this for some plugins (e.q. precss to find imports)
-			from: fileInfo.inputFile,
-			to: 'styles/' //TODO: What do with this?
-		}
-
-		if(processor.parser) {
-			processOptions.parser = processor.parser
-		}
-
-		if(processor.syntax) {
-			processOptions.syntax = processor.syntax
-		}
-
-		//Wrap options in module
-		var postcssPlugins = processor.plugins.reduce(function(pluginArray, curPluginConf) {
-
-			if(typeof curPluginConf.module != 'function') {
-				throw new Error('One of your postcss plugins is not a module!')
+			if(!processor.plugins) {
+				const err = new Error('Please add plugins to your postcss-processor!')
+				return rej(err)
 			}
 
-			var pluginOptions = curPluginConf.options || {}
-			pluginArray.push(curPluginConf.module(pluginOptions))
+			const processOptions = {
+				//We need this for some plugins (e.q. precss to find imports)
+				from: fileInfo.inputFile,
+				to: 'styles/' //TODO: What do with this?
+			}
 
-			return pluginArray
-		}, [])
+			if(processor.parser) {
+				processOptions.parser = processor.parser
+			}
 
-		return new Promise(function(res, rej) {
-			postcss(postcssPlugins)
-			.process(content, processOptions)
+			if(processor.syntax) {
+				processOptions.syntax = processor.syntax
+			}
 
-			.then(function(dataProcessed) {
-				return res(dataProcessed.css)
+			const plugins = []
+			processor.plugins.forEach((plugin) => {
+
+				if(plugin.module instanceof Function === false) {
+					const err = new Error('One of your postcss plugins is not a module!')
+					return rej(err)
+				}
+
+				const Module = plugin.module
+				const options = plugin.options || {}
+				plugins.push(new Module(options))
 			})
 
-			.catch(function(errPostCss) {
-				//Transform postcss error to broccoli error
-				//TODO: Do postcss plugins all have different errorMessage properties?
-				var errBroccoli= new Error(errPostCss.message ? errPostCss.message : errPostCss.originalMessage)
-				errBroccoli.line    = errPostCss.lineNumber
-				errBroccoli.column  = errPostCss.columnNumber
-				return rej(errBroccoli)
-			})
+			postcss(plugins)
+				.process(content, processOptions)
+				.then(dataProcessed => res(dataProcessed.css))
+				.catch((errPostCSS) => {
+
+					// Transform postCSS error to broccoli error
+					const errBroccoli = new Error(errPostCSS.message)
+					errBroccoli.line = errPostCSS.lineNumber
+					errBroccoli.column = errPostCSS.columnNumber
+
+					return rej(errBroccoli)
+				})
 		})
 	}
 }
