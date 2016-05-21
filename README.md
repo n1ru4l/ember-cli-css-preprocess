@@ -249,7 +249,7 @@ An example for using the glob pattern:
 				}
 			}
 		},
-		extension; 'css'
+		extension: 'css'
     ...
 ```
 
