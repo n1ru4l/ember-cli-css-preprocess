@@ -1,6 +1,5 @@
 'use strict'
 const path = require('path')
-const merge = require('lodash.merge')
 const mergeTrees = require('broccoli-merge-trees')
 const StyleProcessor = require('./style-processor')
 const EmberVersionChecker = require('ember-cli-version-checker')
@@ -12,7 +11,7 @@ function StyleProcessorPlugin(optionsFn) {
 }
 
 StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, inputOptions) {
-	const options = merge({}, this.optionsFn(), inputOptions)
+	const options = Object.assign({}, this.optionsFn(), inputOptions)
 
 	const paths = options.outputPaths
 	const extensionDefault = options.extension ? options.extension : this.ext
@@ -20,19 +19,23 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 	// http://stackoverflow.com/a/6582227/4202031
 	const patternExtension =  /\.([0-9a-z]+)(?:[\?#]|$)/i // Returns array [ '.css', 'css' ]
 
-	const trees = Object.keys(paths).map(function(file) {
+	const trees = []
 
-		let inputFileName = file
-		let extension = file.match(patternExtension)
+	for (let inputFile in paths) {
+
+		let extension = inputFile.match(patternExtension)
+		let inputFileName = inputFile
 
 		if(!extension) {
-			inputFileName = `${file}.${extensionDefault}`
+			inputFileName = `${inputFile}.${extensionDefault}`
 		}
 
 		const input = path.join(inputPath, inputFileName)
-		const output = paths[file]
-		return new StyleProcessor([tree], input, output, options)
-	})
+		const output = paths[inputFile]
+
+		const styleProcessor = new StyleProcessor([tree], input, output, options)
+		trees.push(styleProcessor)
+	}
 
 	return mergeTrees(trees)
 }

@@ -40,7 +40,6 @@
     "find-package-json": "^1.0.0",
     "fs-promise": "^0.5.0",
     "is-glob": "^2.0.1",
-    "lodash.merge": "^3.3.2",
     "minimatch": "^3.0.0",
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^2.0.0",

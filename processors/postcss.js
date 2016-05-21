@@ -11,6 +11,7 @@ module.exports = function PostCSSProcessorInitializer(postcss) {
 		return new Promise((res, rej) => {
 
 			if(!processor.plugins) {
+
 				const err = new Error('Please add plugins to your postcss-processor!')
 				return rej(err)
 			}
@@ -30,17 +31,20 @@ module.exports = function PostCSSProcessorInitializer(postcss) {
 			}
 
 			const plugins = []
-			processor.plugins.forEach((plugin) => {
+
+			for (let plugin of processor.plugins) {
 
 				if(plugin.module instanceof Function === false) {
+
 					const err = new Error('One of your postcss plugins is not a module!')
 					return rej(err)
 				}
 
 				const Module = plugin.module
 				const options = plugin.options || {}
+
 				plugins.push(new Module(options))
-			})
+			}
 
 			postcss(plugins)
 				.process(content, processOptions)

@@ -36,6 +36,13 @@ describe('Class: StyleProcessor', function() {
 
 		const styleProcessor = getStyleProcessorInstance('stylesheet.css')
 
+		it('no filter', function*() {
+
+			const result = styleProcessor._checkProcess()
+			expect(result).to.be.true
+
+		})
+
 		it('string which equals filename', function*() {
 
 			const result = styleProcessor._checkProcess('stylesheet.css')

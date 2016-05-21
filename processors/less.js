@@ -28,7 +28,7 @@ module.exports = function LessProcessorInitializer(less) {
 				})
 			}
 
-			options = deepMerge({}, optionsDefault, optionsConfig)
+			options = deepMerge(optionsDefault, optionsConfig)
 			options = deepMerge(options, optionsDefault)
 
 			less.render(content, options, function(errLess, result) {

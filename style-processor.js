@@ -1,6 +1,7 @@
 'use strict'
 
 const CachingWriter = require('broccoli-caching-writer')
+
 const mkdirp = require('mkdirp-promise')
 const path = require('path')
 const fs = require('fs-promise')
@@ -30,17 +31,16 @@ function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
 
 	this._projectRoot = _options.projectRoot
 	this._processors = _options.processors
+
 	this._inputFilePath = `.${inputFile}`
+	this._inputFileDir = path.dirname(this._inputFilePath)
 	this._inputFileName = path.relative(`${_options.projectRoot}/app/styles`, this._inputFilePath) // relative path
 	this._outputFile = outputFile
-
-	//Import path for preprocessors that allow including other files
-	this._importPath = '.' + path.dirname(inputFile)
 
 	//Information which is passed to every single style processor
 	this._fileInfo = {
 		inputFile: this._inputFilePath,
-		importPath: this._importPath,
+		importPath: this._inputFileDir,
 		extension: _options.ext
 	}
 }
@@ -56,8 +56,8 @@ StyleProcessor.prototype.build = co.wrap(function*() {
 		encoding: 'utf8'
 	})
 
-	for(let i = 0; i < this._processors.length; i++) {
-		const processor = this._processors[i]
+	for (let processor of this._processors) {
+
 		if(this._checkProcess(processor.filter)) {
 			const _processor = loadProcessor(processor.type)
 			fileContents = yield _processor(fileContents, processor, this._fileInfo)
@@ -66,15 +66,17 @@ StyleProcessor.prototype.build = co.wrap(function*() {
 
 	const outputFile = path.join(this.outputPath, this._outputFile)
 	const outputFileDir = path.dirname(outputFile)
+
 	yield mkdirp(outputFileDir)
 	yield fs.writeFile(outputFile, fileContents, {
 		encoding: 'utf8'
 	})
+
 	return Promise.resolve()
 })
 
 /**
- * Check if a file matches a filter
+ * Checks if the file should be processed by a processor filter
  *
  * @param {array|string} filter Array of String or String. Supports glob pattern.
  * @returns {boolean} process Process or not process file
@@ -87,25 +89,23 @@ StyleProcessor.prototype._checkProcess = function(filter) {
 	}
 
 	const fileName = this._inputFileName
-	let _process = false
 
-	function checkProcess(filter) {
+	if (isGlob(filter)) {
+		return minimatch(fileName, filter)
+	} else if (typeof filter === 'string') {
+		return (fileName === filter)
+	} else if (filter instanceof Array) {
 
-		if (isGlob(filter)) {
-			_process = minimatch(fileName, filter)
-			return
+		let _process = false
+
+		for (let _filter of filter) {
+			_process = this._checkProcess(_filter)
 		}
 
-		_process = (fileName === filter)
+		return _process
 	}
 
-	if (typeof filter === 'string') {
-		checkProcess(filter)
-	} else if (filter instanceof Array) {
-		filter.forEach(checkProcess)
-	}
-
-	return _process
+	return false
 }
 
 module.exports = StyleProcessor
