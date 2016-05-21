@@ -19,7 +19,12 @@ gulp.task('test', function() {
 		]
 	})
 
-	return gulp.src(['test/**/*.js', '!test/.setup.js', '!test/test-app'])
+	const tests = [
+		'test/load-processor-test.js',
+		'test/style-processor-test.js'
+	]
+
+	return gulp.src(tests)
 		.pipe(_mocha)
 		.once('error', function() {
 			process.exit(1)

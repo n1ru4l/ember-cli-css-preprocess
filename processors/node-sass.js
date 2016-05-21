@@ -7,7 +7,7 @@ const deepMerge = require('deepmerge')
  * @module nodeSass
  */
 
-module.exports = function(nodeSass) {
+module.exports = function NodeSassProcessor(nodeSass) {
 	return function(content, processor, fileInfo) {
 		return new Promise((res, rej) => {
 

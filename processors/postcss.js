@@ -6,7 +6,7 @@
  * @module postcss
  */
 
-module.exports = function(postcss) {
+module.exports = PostCSSProcessor(postcss) {
 	return function(content, processor, fileInfo) {
 		if(!processor.plugins) {
 			throw new Error('Please add plugins to your postcss-process!')

@@ -9,28 +9,33 @@ const co = require('co')
 const isGlob = require('is-glob')
 const minimatch = require('minimatch')
 
-const loadProcessor = require('./_load-processor')
+const loadProcessor = require('./load-processor')
 
 StyleProcessor.prototype = Object.create(CachingWriter.prototype)
 StyleProcessor.prototype.constructor = StyleProcessor
 
-function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
-	if ( !( this instanceof StyleProcessor ) ) {
-		return new StyleProcessor( inputNodes, inputFile, outputFile, _options )
+/**
+ * @class StyleProcessor
+ * @extends CachingWriter
+ */
+function StyleProcessor(inputNodes, inputFile, outputFile, _options) {
+	if(!(this instanceof StyleProcessor)) {
+		return new StyleProcessor(inputNodes, inputFile, outputFile, _options)
 	}
 
-	CachingWriter.call( this, inputNodes, {
+	CachingWriter.call(this, inputNodes, {
 		annotation: _options.annotation
 	})
 
 	this._projectRoot = _options.projectRoot
 	this._processors = _options.processors
 	this._inputFilePath = `.${inputFile}`
-	this._inputFileName = path.relative( `${_options.projectRoot}/app/styles`, this._inputFilePath ) // relative path
+	this._inputFileName = path.relative(`${_options.projectRoot}/app/styles`, this._inputFilePath) // relative path
 	this._outputFile = outputFile
 
 	//Import path for preprocessors that allow including other files
-	this._importPath = '.' + path.dirname( inputFile )
+	this._importPath = '.' + path.dirname(inputFile)
+	
 	//Information which is passed to every single style processor
 	this._fileInfo = {
 		inputFile: this._inputFilePath,
@@ -45,8 +50,10 @@ function StyleProcessor( inputNodes, inputFile, outputFile, _options ) {
  *
  * @returns {Promise}
  */
-StyleProcessor.prototype.build = co.wrap(function * () {
-	let fileContents = yield fs.readFile(this._inputFilePath, { encoding: 'utf8' })
+StyleProcessor.prototype.build = co.wrap(function*() {
+	let fileContents = yield fs.readFile(this._inputFilePath, {
+		encoding: 'utf8'
+	})
 
 	for(let i = 0; i < this._processors.length; i++) {
 		const processor = this._processors[i]
@@ -69,28 +76,26 @@ StyleProcessor.prototype.build = co.wrap(function * () {
  * Check if a file matches a filter
  *
  * @param {array|string} filter Array of String or String. Supports glob pattern.
- * @returns {boolean} _process
+ * @returns {boolean} process Process or not process file
+ * @private
  */
 StyleProcessor.prototype._checkProcess = function(filter) {
 	let _process = false
 	const fileName = this._inputFileName
 
-	if(filter === undefined) {
-		_process = true
-	} else if(filter instanceof String) {
-		if(isGlob(filter)) {
-			_process = minimatch(fileName, filter)
-		} else if(fileName === filter) {
-			_process = true
+	function checkProcess(filter) {
+		if (isGlob(filter)) {
+			return minimatch(fileName, filter)
 		}
-	} else if(filter instanceof Array) {
-		filter.forEach((filter) => {
-			if(isGlob(filter)) {
-				_process = minimatch(fileName, filter)
-			} else if(fileName === filter) {
-				_process = true
-			}
-		})
+		return (fileName === filter)
+	}
+
+	if (!filter) {
+		_process = true
+	} else if (typeof filter === 'string') {
+		_process = checkProcess(filter)
+	} else if (filter instanceof Array) {
+		_process = filter.every(checkProcess)
 	}
 
 	return _process

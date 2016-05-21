@@ -2,7 +2,7 @@
 const path = require('path')
 const merge = require('lodash.merge')
 const mergeTrees = require('broccoli-merge-trees')
-const StyleProcessor = require('./_style-processor')
+const StyleProcessor = require('./style-processor')
 const EmberVersionChecker = require('ember-cli-version-checker')
 
 function StyleProcessorPlugin(optionsFn) {

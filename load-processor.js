@@ -3,14 +3,13 @@
 const compatibleProcessors = require( './package' ).compatibleProcessors
 const semver = require( 'semver' )
 const finder = require( 'find-package-json' )
-  // const resolve = require('resolve')
 
 /**
  * A module for loading a style processor
  * @module loadProcessor
  */
 
-const _processors = {}
+const processors = {}
 
 /**
  * Loads a module in 3 Steps.
@@ -24,7 +23,7 @@ const _processors = {}
  * @returns {Promise} processor
  */
 
-const _loadModule = function( moduleName ) {
+function _loadModule( moduleName ) {
 	let modulePath
 	// Check if module exists
 	try {
@@ -61,7 +60,7 @@ const _loadModule = function( moduleName ) {
  * @param {String} processorName
  * @returns {Function} processor
  */
-const _loadProcessor = function( processorName ) {
+function _loadProcessor( processorName ) {
 	const compatibleVersion = compatibleProcessors[ processorName ]
 
 	// Check if module is compatible
@@ -84,12 +83,12 @@ const _loadProcessor = function( processorName ) {
  * @returns {*} processor
  */
 function loadProcessor( moduleName ) {
-	let _module = _processors[ moduleName ]
+	let _module = processors[ moduleName ]
 	if ( _module !== undefined ) {
 		return _module
 	}
 	_module = _loadProcessor( moduleName )
-	_processors[ moduleName ] = _module
+	processors[ moduleName ] = _module
 	return _module
 }
 

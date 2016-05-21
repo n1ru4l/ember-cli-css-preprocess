@@ -7,7 +7,7 @@ const deepMerge = require('deepmerge')
  * @module less
  */
 
-module.exports = function(less) {
+module.exports = function LessProcessor(less) {
 	return function(content, processor, fileInfo) {
 		const optionsConfig = processor.options || {}
 		const optionsDefault = { plugins: [], paths: [fileInfo.importPath] }
