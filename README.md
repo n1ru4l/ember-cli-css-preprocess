@@ -255,4 +255,4 @@ An example for using the glob pattern:
 
 #### Resources
 
-(Github: BroccoliCachingWriter)[https://github.com/ember-cli/broccoli-caching-writer]
+[Github: BroccoliCachingWriter](https://github.com/ember-cli/broccoli-caching-writer)
