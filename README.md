@@ -88,7 +88,7 @@ Annotation: You can also pass all setting you could pass to [node-sass](https://
                             'last 2 versions'
                         ]
                     }
-                ]
+                }]
             }],
             extension: 'css'
         }
