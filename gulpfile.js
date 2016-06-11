@@ -21,7 +21,10 @@ gulp.task('test', function() {
 
 	const tests = [
 		'test/load-processor-test.js',
-		'test/style-processor-test.js'
+		'test/style-processor-test.js',
+		'test/processor-node-sass-test.js',
+		'test/processor-postcss-test.js',
+		'test/processor-less-test.js'
 	]
 
 	return gulp.src(tests)

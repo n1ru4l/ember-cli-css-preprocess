@@ -1,8 +1,10 @@
 'use strict'
+
 const path = require('path')
 const mergeTrees = require('broccoli-merge-trees')
-const StyleProcessor = require('./style-processor')
 const EmberVersionChecker = require('ember-cli-version-checker')
+
+const StyleProcessor = require('./style-processor')
 
 function StyleProcessorPlugin(optionsFn) {
 	this.name = 'ember-cli-css-preprocess'

@@ -32,11 +32,12 @@ module.exports = function LessProcessorInitializer(less) {
 			options = deepMerge(options, optionsDefault)
 
 			less.render(content, options, function(errLess, result) {
+
 				if(errLess) {
 					//Concat error message
-					var errMessage      = `${errLess.message}\n${errLess.extract[0]}`
+					const errMessage    = `${errLess.message}\n${errLess.extract[0]}`
 					//Transform postcss error to broccoli error
-					var errBroccoli     = new Error(errMessage)
+					const errBroccoli   = new Error(errMessage)
 					errBroccoli.line    = errLess.line
 					errBroccoli.column  = errLess.column
 

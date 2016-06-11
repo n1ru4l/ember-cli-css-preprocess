@@ -4,8 +4,19 @@ const Mocha = require('mocha')
 const coMocha = require('co-mocha')
 const chai = require('chai')
 
-const rimraf = require('rimraf-promise')
 const spawn = require('child_process').spawn
+
+const commonTags = require('common-tags')
+const TemplateTag = commonTags.TemplateTag
+const stripIndentTransformer = commonTags.stripIndentTransformer
+const trimResultTransformer = commonTags.trimResultTransformer
+const replaceResultTransformer = commonTags.replaceResultTransformer
+
+const stripIndent = new TemplateTag(
+  stripIndentTransformer,
+  replaceResultTransformer(/\n(\n*)\s*?$/, '$1'),
+  replaceResultTransformer(/^\n/, '')
+)
 
 function _run_cmd(cmd, args) {
 	return new Promise((res, rej) => {
@@ -21,10 +32,6 @@ function _run_cmd(cmd, args) {
 	})
 }
 
-function npmUninstall(module) {
-	return rimraf(`./node_modules/${module}`)
-}
-
 coMocha(Mocha)
 global.mocha = Mocha
 global.expect = chai.expect
@@ -35,7 +42,8 @@ global.helper = {
 			return _run_cmd('npm', ['install', module])
 		},
 		uninstall: function (module) {
-			return rimraf(`node_modules/${module}`)
+			return _run_cmd('npm', ['uninstall', module])
 		}
-	}
+	},
+	stripIndent: stripIndent
 }

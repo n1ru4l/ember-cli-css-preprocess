@@ -35,14 +35,14 @@ module.exports = function NodeSassProcessorInitializer(nodeSass) {
 
 				if(errSass) {
 					//Transform sass error to broccoli error
-					var errBroccoli     = new Error(errSass.message)
+					const errBroccoli     = new Error(errSass.message)
 					errBroccoli.line    = errSass.line
 					errBroccoli.column  = errSass.column
 
 					return rej(errBroccoli)
 				}
 
-				return res(result.css)
+				return res(result.css.toString())
 			})
 		})
 	}

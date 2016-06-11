@@ -92,9 +92,13 @@ StyleProcessor.prototype._checkProcess = function(filter) {
 
 	if (isGlob(filter)) {
 		return minimatch(fileName, filter)
-	} else if (typeof filter === 'string') {
+	}
+
+	if (typeof filter === 'string') {
 		return (fileName === filter)
-	} else if (filter instanceof Array) {
+	}
+
+	if (filter instanceof Array) {
 
 		let _process = false
 
