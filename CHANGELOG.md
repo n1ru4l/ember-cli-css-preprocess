@@ -1,3 +1,7 @@
+# 1.0.1
+* Fixes README.md examples
+* Adds missing changelog info 
+
 # 1.0.0
 * Refactors StyleProcessor
 * Processor modules are no longer dependencies and must be installed manually
@@ -6,6 +10,7 @@
 * Changes file to filter
 * Implements glob pattern for filter
 * Fixes node-sass sourcemap file
+* Adds tests
 
 
 # 0.0.8
