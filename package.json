@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/gulp test",
-    "prepublish": ""
+    "prepublish": "publish-please guard",
+    "publish-please": "publish-please"
   },
   "keywords": [
     "ember-addon",
@@ -53,7 +54,8 @@
     "gulp-eslint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "mocha": "^2.4.5",
-    "npm": "^3.9.0"
+    "npm": "^3.9.0",
+    "publish-please": "^2.1.4"
   },
   "compatibleProcessors": {
     "postcss": "^5.0.14",

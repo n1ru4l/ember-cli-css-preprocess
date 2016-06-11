@@ -1,0 +1,13 @@
+{
+  "validations": {
+    "vulnerableDependencies": true,
+    "uncommittedChanges": false,
+    "untrackedFiles": true,
+    "sensitiveData": true,
+    "branch": "master",
+    "gitTag": true
+  },
+  "confirm": true,
+  "publishTag": "latest",
+  "prePublishScript": "./node_modules/.bin/gulp travis"
+}
