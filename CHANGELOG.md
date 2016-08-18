@@ -1,3 +1,8 @@
+# 1.0.1
+
+* Bumps dependency versions
+
+
 # 1.0.0
 * Refactors StyleProcessor
 * Processor modules are no longer dependencies and must be installed manually
