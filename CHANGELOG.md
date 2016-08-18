@@ -1,6 +1,10 @@
-# 1.0.1
-
+# 1.0.2
 * Bumps dependency versions
+
+
+# 1.0.1
+* Fixes README.md examples
+* Adds missing changelog info
 
 
 # 1.0.0
@@ -11,6 +15,7 @@
 * Changes file to filter
 * Implements glob pattern for filter
 * Fixes node-sass sourcemap file
+* Adds tests
 
 
 # 0.0.8

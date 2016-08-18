@@ -1,9 +1,4 @@
-# ember-cli-css-preprocess
-
-[![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=master "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
-[![dependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess)
-[![devDependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/dev-status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess?type=dev)
-[![npm version](https://badge.fury.io/js/ember-cli-css-preprocess.svg)](https://badge.fury.io/js/ember-cli-css-preprocess)
+# ember-cli-css-preprocess  [![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
 
 Preprocess your stylesheets with multiple preprocessors.
 
@@ -41,7 +36,7 @@ And add the the basic options:
         // Add options here
         styleProcessorOptions: {
             processors: [],
-            extension:     'css'
+            extension: 'css'
         }
     ...
 ```
@@ -64,11 +59,13 @@ Furthermore you have to install the corresponding npm-module with the same name 
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'node-sass',
-                sourcemaps: true,  // enables sourcemaps
-                options: {}
-            }],
+            processors: [
+                {
+                    type: 'node-sass',
+                    sourcemaps: true,  // enables sourcemaps
+                    options: {}
+                }
+            ],
             extension: 'scss'
         }
     ...
@@ -84,17 +81,21 @@ Annotation: You can also pass all setting you could pass to [node-sass](https://
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'postcss',
-                plugins: [{
-                    module: require('autoprefixer'),
-                    options: {
-                        browsers: [
-                            'last 2 versions'
-                        ]
-                    }
-                }]
-            }],
+            processors: [
+                {
+                    type: 'postcss',
+                    plugins: [
+                        {
+                            module: require('autoprefixer'),
+                            options: {
+                                browsers: [
+                                    'last 2 versions'
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
             extension: 'css'
         }
     ...
@@ -112,19 +113,23 @@ You can also add a custom parser or syntax by adding it to the processor object.
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'postcss',
-                parser: require('postcss-scss'),
-                //syntax: require('postcss-scss'),
-                plugins: [{
-                    module: require('autoprefixer'),
-                    options: {
-                        browsers: [
-                            'last 2 versions'
-                        ]
-                    }
-                ]
-            }],
+            processors: [
+                {
+                    type: 'postcss',
+                    parser: require('postcss-scss'),
+                    //syntax: require('postcss-scss'),
+                    plugins: [
+                        {
+                            module: require('autoprefixer'),
+                            options: {
+                                browsers: [
+                                    'last 2 versions'
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
             extension: 'css'
         }
     ...
@@ -136,9 +141,11 @@ You can also add a custom parser or syntax by adding it to the processor object.
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'less'
-            }],
+            processors: [
+                {
+                    type: 'less'
+                }
+            ],
             extension: 'css'
         }
     ...
@@ -152,19 +159,23 @@ To include any less plugin you can make use of the `plugins`-array, it is handle
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'node-sass'
-            }, {
-                type: 'postcss',
-                plugins: [{
-                    module: require('autoprefixer'),
-                    options: {
-                        browsers: [
-                            'last 2 versions'
-                        ]
-                    }
-                ]
-            }
+            processors: [
+                {
+                    type: 'node-sass'
+                },
+                {
+                    type: 'postcss',
+                    plugins: [
+                        {
+                            module: require('autoprefixer'),
+                            options: {
+                                browsers: [
+                                    'last 2 versions'
+                                ]
+                            }
+                        }
+                    ]
+                }
             ],
             extension: 'css'
         }
@@ -206,20 +217,24 @@ In addition to the default configuration you can add an extension to your `css`-
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'postcss',
-                filter: ['test.css'],
-                plugins: [{
-                    module: require('autoprefixer'),
-                    options: {
-                        browsers: [
-                            'last 2 versions'
-                        ]
-                    }
-                ]
-            }, {
-                type: 'node-sass'
-            }
+            processors: [
+                {
+                    type: 'postcss',
+                    filter: ['test.css'],
+                    plugins: [
+                        {
+                            module: require('autoprefixer'),
+                            options: {
+                                browsers: [
+                                    'last 2 versions'
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    type: 'node-sass'
+                }
             ],
             extension: 'css'
         }
@@ -234,13 +249,15 @@ An example for using the glob pattern:
     var app = new EmberApp(defaults, {
         // Add options here
         styleProcessorOptions: {
-            processors: [{
-                type: 'node-sass',
-                filter: ['*.scss']
-            }, {
-                type: 'less',
-                filter: ['*.less']
-            }
+            processors: [
+                {
+                    type: 'node-sass',
+                    filter: ['*.scss']
+                },
+                {
+                    type: 'less',
+                    filter: ['*.less']
+                }
             ],
             extension: 'css'
         },
@@ -253,8 +270,7 @@ An example for using the glob pattern:
                     'trolol.scss': 'assets/foo.css' // will only be processed by less processor
                 }
             }
-        },
-        extension: 'css'
+        }
     ...
 ```
 
