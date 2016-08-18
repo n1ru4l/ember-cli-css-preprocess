@@ -1,4 +1,9 @@
-# ember-cli-css-preprocess  [![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
+# ember-cli-css-preprocess
+
+[![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=master "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
+[![dependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess)
+[![devDependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/dev-status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess?type=dev)
+[![npm version](https://badge.fury.io/js/ember-cli-css-preprocess.svg)](https://badge.fury.io/js/ember-cli-css-preprocess)
 
 Preprocess your stylesheets with multiple preprocessors.
 
@@ -61,8 +66,8 @@ Furthermore you have to install the corresponding npm-module with the same name 
         styleProcessorOptions: {
             processors: [{
                 type: 'node-sass',
-				sourcemaps: true,  // enables sourcemaps
-				options: {}
+                sourcemaps: true,  // enables sourcemaps
+                options: {}
             }],
             extension: 'scss'
         }
@@ -178,18 +183,18 @@ In addition to the default configuration you can add an extension to your `css`-
 
 ```javascript
 ... // styleProcessorOptions
-			extension: 'scss' // specified extension, overrides default: css
-		},
-		outputPaths: {
-	    	app: {
-				css: {
-					'app': 'assets/lel.css', // will parse app/styles/app.scss
-					'amk.css': 'assets/toll.css', //will parse app/styles/amk.css
-					'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.less
-					'trolol/bars': 'assets/foo.css' //will parse app/trolol/bars.scss
-				}
-			}
-		}
+            extension: 'scss' // specified extension, overrides default: css
+        },
+        outputPaths: {
+            app: {
+                css: {
+                    'app': 'assets/lel.css', // will parse app/styles/app.scss
+                    'amk.css': 'assets/toll.css', //will parse app/styles/amk.css
+                    'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.less
+                    'trolol/bars': 'assets/foo.css' //will parse app/trolol/bars.scss
+                }
+            }
+        }
 
 ```
 
@@ -234,22 +239,22 @@ An example for using the glob pattern:
                 filter: ['*.scss']
             }, {
                 type: 'less',
-				filter: ['*.less']
+                filter: ['*.less']
             }
             ],
             extension: 'css'
         },
-		outputPaths: {
-	    	app: {
-				css: {
-					'app': 'assets/lel.css', // input file contents will equal input file contents
-					'amk.css': 'assets/toll.css', // input file contents will equal input file contents
-					'hippo.less': 'assets/eichhorn.css', // will only be processed by less processor
-					'trolol.scss': 'assets/foo.css' // will only be processed by less processor
-				}
-			}
-		},
-		extension: 'css'
+        outputPaths: {
+            app: {
+                css: {
+                    'app': 'assets/lel.css', // input file contents will equal input file contents
+                    'amk.css': 'assets/toll.css', // input file contents will equal input file contents
+                    'hippo.less': 'assets/eichhorn.css', // will only be processed by less processor
+                    'trolol.scss': 'assets/foo.css' // will only be processed by less processor
+                }
+            }
+        },
+        extension: 'css'
     ...
 ```
 
