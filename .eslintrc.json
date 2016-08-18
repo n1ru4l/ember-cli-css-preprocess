@@ -26,6 +26,7 @@
             "error",
             "never"
         ],
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "require-yield": "off"
     }
 }
