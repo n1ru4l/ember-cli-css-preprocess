@@ -1,6 +1,11 @@
+# 1.0.2
+* Bumps dependency versions
+
+
 # 1.0.1
 * Fixes README.md examples
-* Adds missing changelog info 
+* Adds missing changelog info
+
 
 # 1.0.0
 * Refactors StyleProcessor

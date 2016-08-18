@@ -13,9 +13,9 @@ const trimResultTransformer = commonTags.trimResultTransformer
 const replaceResultTransformer = commonTags.replaceResultTransformer
 
 const stripIndent = new TemplateTag(
-  stripIndentTransformer,
-  replaceResultTransformer(/\n(\n*)\s*?$/, '$1'),
-  replaceResultTransformer(/^\n/, '')
+		stripIndentTransformer,
+		trimResultTransformer('left'),
+		replaceResultTransformer(/\n(\n*)\s*?$/, '$1')
 )
 
 function _run_cmd(cmd, args) {
