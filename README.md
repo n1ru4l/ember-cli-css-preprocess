@@ -1,4 +1,9 @@
-# ember-cli-css-preprocess  [![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=develop "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
+# ember-cli-css-preprocess
+
+[![Build Status](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess.svg?branch=master "Build Status")](https://travis-ci.org/n1ru4l/ember-cli-css-preprocess)
+[![dependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess)
+[![devDependencies Status](https://david-dm.org/n1ru4l/ember-cli-css-preprocess/dev-status.svg)](https://david-dm.org/n1ru4l/ember-cli-css-preprocess?type=dev)
+[![npm version](https://badge.fury.io/js/ember-cli-css-preprocess.svg)](https://badge.fury.io/js/ember-cli-css-preprocess)
 
 Preprocess your stylesheets with multiple preprocessors.
 
