@@ -58,7 +58,7 @@
   },
   "compatibleProcessors": {
     "postcss": "^5.0.14",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.3.0",
     "less": "^2.7.1"
   },
   "engines": {

@@ -9,7 +9,7 @@ describe('Processor: node-sass', function() {
 	before(function*() {
 		this.timeout(0)
 		yield npm.uninstall('node-sass')
-		yield npm.install('node-sass@3.7.0')
+		yield npm.install('node-sass@4.3.0')
 	})
 
 	after(function*() {
