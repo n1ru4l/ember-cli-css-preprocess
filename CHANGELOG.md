@@ -1,4 +1,4 @@
-# 1.0.3
+# 2.0.0
 * Bump compatible processor version of node-sass to v4.3 with support for lib-sass 3.4.3
 
 # 1.0.2
