@@ -1,3 +1,8 @@
+# 1.1.0
+* Bumps dependency versions
+* Adds support for node-sass 4.x.x
+
+
 # 1.0.2
 * Bumps dependency versions
 

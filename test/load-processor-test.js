@@ -2,7 +2,7 @@
 
 const processor = 'less'
 const incompatibleVersion = '1.6.3'
-const compatibleVersion = '2.7.1'
+const compatibleVersion = '2.7.2'
 const npm = helper.npm
 
 const loadProcessor = require('./../load-processor')

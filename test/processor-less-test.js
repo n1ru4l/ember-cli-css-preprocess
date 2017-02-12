@@ -9,7 +9,7 @@ describe('Processor: less', function() {
 	before(function*() {
 		this.timeout(0)
 
-		yield npm.install('less@2.7.1')
+		yield npm.install('less@2.7.2')
 	})
 
 	after(function*() {
