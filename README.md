@@ -206,7 +206,7 @@ In addition to the default configuration you can add an extension to your `css`-
                 css: {
                     'app': 'assets/lel.css', // will parse app/styles/app.scss
                     'amk.css': 'assets/toll.css', //will parse app/styles/amk.css
-                    'hippo.less': 'assets/eichhorn.css', //will parse app/styles/amk.less
+                    'hippo.less': 'assets/eichhorn.css', //will parse app/styles/hippo.less
                     'trolol/bars': 'assets/foo.css' //will parse app/trolol/bars.scss
                 }
             }
