@@ -20,7 +20,7 @@ describe('Processor: less', function() {
 	it('can return a process-function', function*() {
 		const less = require('less')
 		const processor = processorLoader(less)
-		expect(processor).to.be.a.function
+		expect(processor).to.be.a('function')
 	})
 
 	it('can process data', function*() {

@@ -44,7 +44,7 @@ describe('Module: loadProcessor', function() {
 		this.timeout(0)
 		yield npm.install(`${processor}@${compatibleVersion}`)
 
-		expect(loadProcessor(processor)).to.be.a.function
+		expect(loadProcessor(processor)).to.be.a('function')
 		yield npm.uninstall(processor)
 	})
 

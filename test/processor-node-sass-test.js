@@ -20,7 +20,7 @@ describe('Processor: node-sass', function() {
 	it('can return a process-function', function*() {
 		const sass = require('node-sass')
 		const processor = processorLoader(sass)
-		expect(processor).to.be.a.function
+		expect(processor).to.be.a('function')
 	})
 
 	it('can process data', function*() {

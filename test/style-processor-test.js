@@ -88,7 +88,7 @@ describe('Class: StyleProcessor', function() {
 		it('array with additional negation', function*() {
 
 			const result = styleProcessor._checkProcess(['stylesheet.css', '!*.css'])
-			expect(result).to.be.fale
+			expect(result).to.be.false
 
 		})
 

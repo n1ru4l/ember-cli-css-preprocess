@@ -22,7 +22,7 @@ describe('Processor: postcss', function() {
 	it('can return a process-function', function*() {
 		const postCSS = require('postcss')
 		const processor = processorLoader(postCSS)
-		expect(processor).to.be.a.function
+		expect(processor).to.be.a('function')
 	})
 
 	it('can process data', function*() {
