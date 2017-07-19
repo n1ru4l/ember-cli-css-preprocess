@@ -8,7 +8,7 @@ describe('Processor: postcss', function() {
 
 	before(function*() {
 		this.timeout(0)
-		yield npm.install('postcss@5.0.14')
+		yield npm.install('postcss@6.0.6')
 		yield npm.install('autoprefixer')
 	})
 
