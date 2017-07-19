@@ -19,7 +19,7 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 	const extensionDefault = options.extension ? options.extension : this.ext
 
 	// http://stackoverflow.com/a/6582227/4202031
-	const patternExtension =  /\.([0-9a-z]+)(?:[\?#]|$)/i // Returns array [ '.css', 'css' ]
+	const patternExtension =  /\.([0-9a-z]+)(?:[?#]|$)/i // Returns array [ '.css', 'css' ]
 
 	const trees = []
 
