@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-css-preprocess",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
