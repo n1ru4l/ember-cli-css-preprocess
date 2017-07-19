@@ -4,7 +4,8 @@
   "description": "Preprocess your stylesheets with multiple preprocessors like node-sass, postcss or less",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp test",
+    "test": "gulp test",
+    "lint": "eslint --ignore-path .gitignore .",
     "prepublish": "publish-please guard",
     "publish-please": "publish-please"
   },
@@ -50,6 +51,7 @@
     "chai": "^4.1.0",
     "co-mocha": "^1.2.0",
     "common-tags": "^1.4.0",
+    "eslint": "^4.2.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
     "gulp-mocha": "^4.3.1",
