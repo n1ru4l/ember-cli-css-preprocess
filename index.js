@@ -45,7 +45,8 @@ StyleProcessorPlugin.prototype.toTree = function(tree, inputPath, outputPath, in
 module.exports = {
 	name: 'ember-cli-css-preprocess',
 	shouldSetupRegistryInIncluded: function() {
-		return !EmberVersionChecker.isAbove(this, '0.2.0')
+		let checker = new EmberVersionChecker(this)
+		return checker.for('ember-cli').isAbove('0.2.0')
 	},
 	styleProcessorOptions: function() {
 		// const env = process.env.EMBER_ENV
