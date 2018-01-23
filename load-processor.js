@@ -1,6 +1,5 @@
 'use strict'
-
-const compatibleProcessors = require('./package').compatibleProcessors
+const compatibleProcessors = require('./package').peerDependencies
 const semver = require('semver')
 const finder = require('find-package-json')
 
