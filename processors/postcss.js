@@ -29,6 +29,10 @@ module.exports = function PostCSSProcessorInitializer(postcss) {
 			if(processor.syntax) {
 				processOptions.syntax = processor.syntax
 			}
+			
+			if (processor.sourcemaps) {
+				processOptions.map = { inline: true }
+			}
 
 			const plugins = []
 
