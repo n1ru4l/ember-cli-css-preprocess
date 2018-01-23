@@ -1,24 +1,9 @@
 'use strict'
 
-const npm = helper.npm
 const stripIndent = helper.stripIndent
 const processorLoader = require('./../processors/postcss')
 
 describe('Processor: postcss', function() {
-
-	before(function*() {
-		this.timeout(0)
-		yield npm.install('postcss@6.0.6')
-		yield npm.install('autoprefixer')
-	})
-
-	after(function*() {
-		this.timeout( 0 )
-		yield npm.uninstall('postcss')
-		yield npm.uninstall('autoprefixer')
-
-	})
-
 	it('can return a process-function', function*() {
 		const postCSS = require('postcss')
 		const processor = processorLoader(postCSS)
@@ -26,7 +11,6 @@ describe('Processor: postcss', function() {
 	})
 
 	it('can process data', function*() {
-
 		const postcss = require('postcss')
 		const processor = processorLoader(postcss)
 
