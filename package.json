@@ -47,6 +47,7 @@
     "semver": "^5.3.0"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.5",
     "chai": "^4.1.0",
     "co-mocha": "^1.2.0",
     "common-tags": "^1.4.0",
@@ -54,15 +55,18 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
     "gulp-mocha": "^4.3.1",
+    "less": "^2.7.3",
     "mocha": "^3.2.0",
+    "node-sass": "^4.7.2",
+    "postcss": "^6.0.16",
     "publish-please": "^2.2.0"
-  },
-  "compatibleProcessors": {
-    "postcss": "^6.0.0",
-    "node-sass": "^3.4.2 || ^4.5.0",
-    "less": "^2.7.2"
   },
   "engines": {
     "node": ">=4.2.4"
+  },
+  "peerDependencies": {
+    "less": "^2.7.3",
+    "node-sass": "^4.7.2",
+    "postcss": "^6.0.16"
   }
 }

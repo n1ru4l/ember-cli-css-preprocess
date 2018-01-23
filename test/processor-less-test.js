@@ -1,21 +1,9 @@
 'use strict'
 
-const npm = helper.npm
 const stripIndent = helper.stripIndent
 const processorLoader = require('./../processors/less')
 
 describe('Processor: less', function() {
-
-	before(function*() {
-		this.timeout(0)
-
-		yield npm.install('less@2.7.2')
-	})
-
-	after(function*() {
-		this.timeout(0)
-		yield npm.uninstall('less')
-	})
 
 	it('can return a process-function', function*() {
 		const less = require('less')

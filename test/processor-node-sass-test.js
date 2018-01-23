@@ -1,21 +1,9 @@
 'use strict'
 
-const npm = helper.npm
 const stripIndent = helper.stripIndent
 const processorLoader = require('./../processors/node-sass')
 
 describe('Processor: node-sass', function() {
-
-	before(function*() {
-		this.timeout(0)
-		yield npm.uninstall('node-sass')
-		yield npm.install('node-sass@4.5.0')
-	})
-
-	after(function*() {
-		this.timeout( 0 )
-		yield npm.uninstall('node-sass')
-	})
 
 	it('can return a process-function', function*() {
 		const sass = require('node-sass')
