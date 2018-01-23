@@ -59,8 +59,7 @@
     "mocha": "^3.2.0",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.16",
-    "publish-please": "^2.2.0",
-    "yarn-programmatic": "^0.0.2"
+    "publish-please": "^2.2.0"
   },
   "engines": {
     "node": ">=4.2.4"
