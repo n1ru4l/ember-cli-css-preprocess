@@ -1,8 +1,6 @@
 'use strict'
 
 const processor = 'less'
-const incompatibleVersion = '1.6.3'
-const compatibleVersion = '2.7.2'
 
 const loadProcessor = require('./../load-processor')
 
