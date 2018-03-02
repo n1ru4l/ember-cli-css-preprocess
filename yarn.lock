@@ -613,9 +613,9 @@ clone@^1.0.0, clone@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.2.tgz#260b7a99ebb1edfe247538175f783243cb19d149"
 
-co-mocha@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/co-mocha/-/co-mocha-1.2.1.tgz#145b997d58acd56616b3de557ff24df3d7cd63ba"
+co-mocha@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/co-mocha/-/co-mocha-1.2.2.tgz#c4fdf24d37f43ca4da668b14542a96e9377479ab"
   dependencies:
     co "^4.0.0"
     is-generator "^1.0.1"
