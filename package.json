@@ -58,7 +58,7 @@
     "less": "3.8.1",
     "mocha": "5.2.0",
     "node-sass": "4.9.3",
-    "postcss": "6.0.23",
+    "postcss": "7.0.2",
     "publish-please": "2.4.1"
   },
   "engines": {
@@ -67,6 +67,6 @@
   "peerDependencies": {
     "less": "^3.0.0",
     "node-sass": "^4.7.2",
-    "postcss": "^6.0.16"
+    "postcss": "^6.0.16 || ^7.0.0"
   }
 }
