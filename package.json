@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "autoprefixer": "9.1.5",
-    "chai": "4.1.2",
+    "chai": "4.2.0",
     "co-mocha": "1.2.2",
     "common-tags": "1.8.0",
     "eslint": "5.6.0",
