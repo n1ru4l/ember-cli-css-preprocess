@@ -51,7 +51,7 @@
     "chai": "4.2.0",
     "co-mocha": "1.2.2",
     "common-tags": "1.8.0",
-    "eslint": "5.6.1",
+    "eslint": "5.7.0",
     "gulp": "3.9.1",
     "gulp-eslint": "5.0.0",
     "gulp-mocha": "6.0.0",
