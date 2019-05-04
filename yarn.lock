@@ -3152,9 +3152,9 @@ postcss-value-parser@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.1.tgz#9ff822547e2893213cf1c30efa51ac5fd1ba8281"
 
-postcss@7.0.15:
-  version "7.0.15"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.15.tgz#7f62bfff3437a8d358850792e1daee828e67e959"
+postcss@7.0.16:
+  version "7.0.16"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.16.tgz#48f64f1b4b558cb8b52c88987724359acb010da2"
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
