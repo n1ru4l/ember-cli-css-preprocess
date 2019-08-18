@@ -2380,9 +2380,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-less@3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/less/-/less-3.10.0.tgz#1150f727651908516fd4b47133a8469b29b6c5ce"
+less@3.10.1:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/less/-/less-3.10.1.tgz#a1c97e3436acdfd1757916333b9906f3af7d559e"
   dependencies:
     clone "^2.1.2"
   optionalDependencies:
