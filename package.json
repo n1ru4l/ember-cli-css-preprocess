@@ -58,7 +58,7 @@
     "less": "3.10.3",
     "mocha": "5.2.0",
     "node-sass": "4.12.0",
-    "postcss": "7.0.17",
+    "postcss": "7.0.18",
     "publish-please": "2.4.1"
   },
   "engines": {
