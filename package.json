@@ -44,7 +44,7 @@
     "minimatch": "^3.0.3",
     "mkdirp": "^0.5.1",
     "mkdirp-promise": "^5.0.1",
-    "semver": "^5.3.0"
+    "semver": "^6.0.0"
   },
   "devDependencies": {
     "autoprefixer": "9.7.3",
