@@ -56,7 +56,7 @@
     "gulp-eslint": "5.0.0",
     "gulp-mocha": "6.0.0",
     "less": "3.10.3",
-    "mocha": "5.2.0",
+    "mocha": "6.2.2",
     "node-sass": "4.13.0",
     "postcss": "7.0.26",
     "publish-please": "2.4.1"
