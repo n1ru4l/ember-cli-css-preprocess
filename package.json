@@ -57,7 +57,7 @@
     "gulp-mocha": "6.0.0",
     "less": "3.10.3",
     "mocha": "5.2.0",
-    "node-sass": "4.13.0",
+    "node-sass": "4.13.1",
     "postcss": "7.0.26",
     "publish-please": "2.4.1"
   },
