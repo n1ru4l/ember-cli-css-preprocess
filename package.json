@@ -34,7 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "broccoli-caching-writer": "^3.0.3",
-    "broccoli-merge-trees": "^3.0.0",
+    "broccoli-merge-trees": "^4.0.0",
     "co": "^4.6.0",
     "deepmerge": "^2.0.0",
     "ember-cli-version-checker": "^2.0.0",
