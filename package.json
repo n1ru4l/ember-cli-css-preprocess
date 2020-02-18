@@ -37,7 +37,7 @@
     "broccoli-merge-trees": "^3.0.0",
     "co": "^4.6.0",
     "deepmerge": "^2.0.0",
-    "ember-cli-version-checker": "^2.0.0",
+    "ember-cli-version-checker": "^5.0.0",
     "find-package-json": "^1.0.0",
     "fs-promise": "^2.0.3",
     "is-glob": "^4.0.0",
