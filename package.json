@@ -52,7 +52,7 @@
     "co-mocha": "1.2.2",
     "common-tags": "1.8.0",
     "eslint": "5.16.0",
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "gulp-eslint": "5.0.0",
     "gulp-mocha": "6.0.0",
     "less": "3.11.1",
